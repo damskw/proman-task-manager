@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request, redirect
 from dotenv import load_dotenv
 from util import json_response
 import mimetypes
@@ -41,7 +41,23 @@ def get_cards_for_board(board_id: int):
     All cards that belongs to a board
     :param board_id: id of the parent board
     """
-    return queries.get_cards_for_board(board_id)
+    if request.method == "GET":
+        return queries.get_cards_for_board(board_id)
+
+
+@app.route("/api/boards/<int:board_id>/cards/", methods=["POST"])
+@json_response
+def add_empty_card(board_id: int):
+    """
+    Add empty card to a board
+    :param board_id: id of a board, title of a new card, order of a new card
+    """
+    if request.method == "POST":
+        data = request.get_json()
+        card_title = data["cardTitle"]
+        card_order = data["cardOrder"]
+        queries.create_empty_card(board_id, card_title, card_order)
+        return queries.return_created_card(card_order, board_id)
 
 
 @app.route("/api/cards/<int:card_id>/items/")

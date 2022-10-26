@@ -23,13 +23,13 @@ export function htmlFactory(template) {
 }
 
 function boardBuilder(board) {
-    return `<div class="single-board">
+    return `<div class="single-board" data-board-id=${board.id}>
                 <div class="board-header">
                     <div class="board-name">${board.title}</div>
                     <hr>
-
+                    <button class="page-button" data-new-card-board-id=${board.id}>Add new card</button>
                 </div>
-                <div class="cards-container" data-board-id=${board.id}>
+                <div class="cards-container" data-board-cards-container-id=${board.id}>
                 
                 </div>
             </div>`;

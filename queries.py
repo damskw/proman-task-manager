@@ -62,3 +62,25 @@ def get_items_for_card(card_id):
         , {"card_id": card_id})
 
     return matching_items
+
+
+def create_empty_card(board_id, card_title, card_order):
+    data_manager.execute_insert(
+        """
+        INSERT INTO cards(board_id, title, card_order)
+        VALUES (%(board_id)s, %(card_title)s, %(card_order)s)
+        """
+        , {"board_id": board_id, "card_title": card_title, "card_order": card_order}
+    )
+
+
+def return_created_card(card_order, board_id, fetchall=False):
+    matching_card = data_manager.execute_select(
+        """
+        SELECT * FROM cards
+        WHERE cards.card_order = %(card_order)s AND cards.board_id = %(board_id)s
+        ;
+        """
+        , {"card_order": card_order, "board_id": board_id})
+
+    return matching_card

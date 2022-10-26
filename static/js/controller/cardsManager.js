@@ -9,7 +9,7 @@ export let cardsManager = {
         for (let card of cards) {
             const cardBuilder = htmlFactory(htmlTemplates.card);
             const content = cardBuilder(card);
-            domManager.addChild(`.cards-container[data-board-id="${boardId}"]`, content);
+            domManager.addChild(`.cards-container[data-board-cards-container-id="${boardId}"]`, content);
             // domManager.addEventListener(
             //     `.card[data-card-id="${card.id}"]`,
             //     "click",
