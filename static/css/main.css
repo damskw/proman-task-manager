@@ -126,3 +126,80 @@ nav ul li a {
     font-size: 2em;
     color: white;
 }
+
+.all-boards-container {
+    margin-top: 10em;
+    margin-bottom: 5em;
+    min-height: 50vh;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.center-all-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.board-header {
+    padding: 2em;
+}
+
+.board-name {
+    font-size: 2em;
+}
+
+.cards-container {
+    padding-left: 3em;
+    padding-right: 3em;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    /*grid-template-rows: 1fr 1fr 1fr;*/
+    grid-gap: 1em;
+}
+
+.single-card {
+    min-height: 1em;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-bottom: 1em;
+    background-color: #ebecf0;
+    border-radius: 0.5em;
+    border: 1px solid lightgray;
+}
+
+.single-card:hover {
+    border: 1px solid gray;
+}
+
+.single-board {
+    width: 90%;
+    margin-bottom: 5em;
+}
+
+.card-name {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    font-weight: bold;
+}
+
+.card-item {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    background: #fff;
+    box-shadow: white 2px 2px;
+    border-radius: 0.2em;
+}
+
+.card-item:hover {
+    cursor: pointer;
+    background: lightgray;
+    box-shadow: lightgray 2px 2px;
+}
+

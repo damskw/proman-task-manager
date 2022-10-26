@@ -14,6 +14,9 @@ export let dataHandler = {
     getCardsByBoardId: async function (boardId) {
         return await apiGet(`/api/boards/${boardId}/cards/`);
     },
+    getItemsByCardId: async function (cardId) {
+        return await apiGet(`/api/cards/${cardId}/items/`);
+    },
     getCard: async function (cardId) {
         // the card is retrieved and then the callback function is called with the card
     },

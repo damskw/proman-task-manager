@@ -10,12 +10,14 @@ export let boardsManager = {
             const boardBuilder = htmlFactory(htmlTemplates.board);
             const content = boardBuilder(board);
             domManager.addChild("#root", content);
-            domManager.addEventListener(
-                `.toggle-board-button[data-board-id="${board.id}"]`,
-                "click",
-                showHideButtonHandler
-            );
+            // domManager.addEventListener(
+            //     `.toggle-board-button[data-board-id="${board.id}"]`,
+            //     "click",
+            //     showHideButtonHandler
+            // );
+            await cardsManager.loadCards(board.id);
         }
+
     },
 };
 

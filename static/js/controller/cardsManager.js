@@ -1,6 +1,7 @@
 import {dataHandler} from "../data/dataHandler.js";
 import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
+import {itemsManager} from "./itemsManager.js";
 
 export let cardsManager = {
     loadCards: async function (boardId) {
@@ -8,12 +9,13 @@ export let cardsManager = {
         for (let card of cards) {
             const cardBuilder = htmlFactory(htmlTemplates.card);
             const content = cardBuilder(card);
-            domManager.addChild(`.board[data-board-id="${boardId}"]`, content);
-            domManager.addEventListener(
-                `.card[data-card-id="${card.id}"]`,
-                "click",
-                deleteButtonHandler
-            );
+            domManager.addChild(`.cards-container[data-board-id="${boardId}"]`, content);
+            // domManager.addEventListener(
+            //     `.card[data-card-id="${card.id}"]`,
+            //     "click",
+            //     deleteButtonHandler
+            // );
+            await itemsManager.loadItems(card.id);
         }
     },
 };

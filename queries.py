@@ -47,3 +47,18 @@ def get_cards_for_board(board_id):
         , {"board_id": board_id})
 
     return matching_cards
+
+
+def get_items_for_card(card_id):
+    # # remove this code once you implement the database
+    # return [{"title": "title1", "id": 1}, {"title": "board2", "id": 2}]
+
+    matching_items = data_manager.execute_select(
+        """
+        SELECT * FROM items
+        WHERE items.card_id = %(card_id)s
+        ;
+        """
+        , {"card_id": card_id})
+
+    return matching_items
