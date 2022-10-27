@@ -29,8 +29,14 @@ export let dataHandler = {
     createEmptyCard: async function (boardId) {
         // creates an empty card which values can be updated later
         const cards = await this.getCardsByBoardId(boardId);
-        const data = { cardTitle: "new card", boardId: boardId, cardOrder: cards.length + 1};
+        const data = {cardTitle: "new card", boardId: boardId, cardOrder: cards.length + 1};
         return await apiPost(`/api/boards/${boardId}/cards/`, data)
+    },
+    createNewItem: async function (cardId) {
+        // creates a new item with default text
+        const items = await this.getItemsByCardId(cardId);
+        const data = {itemTitle: "new item", cardId: cardId, itemOrder: items.length + 1};
+        return await apiPost(`/api/cards/${cardId}/items/`, data)
     }
 };
 

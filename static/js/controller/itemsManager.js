@@ -8,12 +8,8 @@ export let itemsManager = {
         for (let item of items) {
             const itemBuilder = htmlFactory(htmlTemplates.item);
             const content = itemBuilder(item);
-            domManager.addChild(`.single-card[data-card-id="${cardId}"]`, content);
-            // domManager.addEventListener(
-            //     `.card[data-card-id="${card.id}"]`,
-            //     "click",
-            //     deleteButtonHandler
-            // );
+            domManager.addChild(`.single-card-item-section[data-card-id-item-section="${cardId}"]`, content);
         }
     },
 };
+

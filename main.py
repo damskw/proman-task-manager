@@ -59,6 +59,20 @@ def add_empty_card(board_id: int):
         return queries.create_empty_card(board_id, card_title, card_order)
 
 
+@app.route("/api/cards/<int:card_id>/items/", methods=["POST"])
+@json_response
+def add_empty_item(card_id: int):
+    """
+    Add new item to a card
+    :param card_id: id of a card, title of a new item, order of a new item
+    """
+    if request.method == "POST":
+        data = request.get_json()
+        item_title = data["itemTitle"]
+        item_order = data["itemOrder"]
+        return queries.create_new_item(card_id, item_title, item_order)
+
+
 @app.route("/api/cards/<int:card_id>/items/")
 @json_response
 def get_items_for_card(card_id: int):

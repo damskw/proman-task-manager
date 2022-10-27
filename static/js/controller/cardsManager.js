@@ -10,15 +10,22 @@ export let cardsManager = {
             const cardBuilder = htmlFactory(htmlTemplates.card);
             const content = cardBuilder(card);
             domManager.addChild(`.cards-container[data-board-cards-container-id="${boardId}"]`, content);
-            // domManager.addEventListener(
-            //     `.card[data-card-id="${card.id}"]`,
-            //     "click",
-            //     deleteButtonHandler
-            // );
             await itemsManager.loadItems(card.id);
+            domManager.addEventListener(
+                `.transparent-button[data-add-item-button-card-id="${card.id}"]`,
+                "click",
+                addItem
+            );
         }
     },
 };
 
-function deleteButtonHandler(clickEvent) {
+async function addItem(clickEvent) {
+    const cardId = clickEvent.target.dataset.addItemButtonCardId;
+    const items = await dataHandler.createNewItem(cardId);
+    items.forEach(item => {
+        const itemBuilder = htmlFactory(htmlTemplates.item);
+        const content = itemBuilder(item);
+        domManager.addChild(`.single-card-item-section[data-card-id-item-section="${cardId}"]`, content);
+    })
 }
