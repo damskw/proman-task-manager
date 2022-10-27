@@ -72,9 +72,6 @@ def create_empty_card(board_id, card_title, card_order):
         """
         , {"board_id": board_id, "card_title": card_title, "card_order": card_order}
     )
-
-
-def return_created_card(card_order, board_id, fetchall=False):
     matching_card = data_manager.execute_select(
         """
         SELECT * FROM cards

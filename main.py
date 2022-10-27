@@ -56,8 +56,7 @@ def add_empty_card(board_id: int):
         data = request.get_json()
         card_title = data["cardTitle"]
         card_order = data["cardOrder"]
-        queries.create_empty_card(board_id, card_title, card_order)
-        return queries.return_created_card(card_order, board_id)
+        return queries.create_empty_card(board_id, card_title, card_order)
 
 
 @app.route("/api/cards/<int:card_id>/items/")
