@@ -17,7 +17,7 @@ export let cardsManager = {
                 addItem
             );
         }
-    },
+    }, addItem,
 };
 
 async function addItem(clickEvent) {

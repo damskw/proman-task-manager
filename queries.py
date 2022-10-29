@@ -78,7 +78,7 @@ def create_empty_card(board_id, card_title, card_order):
         WHERE cards.card_order = %(card_order)s AND cards.board_id = %(board_id)s
         ;
         """
-        , {"card_order": card_order, "board_id": board_id})
+        , {"card_order": card_order, "board_id": board_id}, fetchall=False)
 
     return matching_card
 
@@ -100,3 +100,16 @@ def create_new_item(card_id, item_title, item_order):
         , {"item_order": item_order, "card_id": card_id})
 
     return matching_card
+
+
+def create_empty_board(board_title):
+    matching_board = data_manager.execute_select(
+        """
+        INSERT INTO boards(title)
+        VALUES (%(board_title)s);
+        SELECT * from boards
+        WHERE boards.id = currval(pg_get_serial_sequence('boards', 'id'));
+        """
+        , {"board_title": board_title}, fetchall=False)
+
+    return matching_board
