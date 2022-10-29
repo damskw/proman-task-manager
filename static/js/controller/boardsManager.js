@@ -76,8 +76,10 @@ function revealEditBoardTitleForm(clickEvent) {
     form.addEventListener("submit", async function (e) {
         e.preventDefault();
         const data = Object.fromEntries(new FormData(e.target).entries());
-        await dataHandler.changeBoardTitle(boardId, data["board-title"]);
-        boardTitle.innerText = data["board-title"];
+        if (data["board-title"]) {
+            await dataHandler.changeBoardTitle(boardId, data["board-title"]);
+            boardTitle.innerText = data["board-title"];
+        }
         boardTitle.classList.remove("hide-display");
         form.classList.remove("show-display");
         form["board-title"].style.color = "gray";
