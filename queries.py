@@ -113,3 +113,15 @@ def create_empty_board(board_title):
         , {"board_title": board_title}, fetchall=False)
 
     return matching_board
+
+
+def update_board_title(board_id, board_title):
+    data_manager.execute_insert(
+        """
+        UPDATE boards
+        SET title = %(board_title)s
+        WHERE boards.id = %(board_id)s;
+        SELECT * from boards
+        WHERE boards.id = %(board_id)s;
+        """
+        , {"board_id": board_id, "board_title": board_title})

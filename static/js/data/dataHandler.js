@@ -5,12 +5,6 @@ export let dataHandler = {
     getBoard: async function (boardId) {
         // the board is retrieved and then the callback function is called with the board
     },
-    getStatuses: async function () {
-        // the statuses are retrieved and then the callback function is called with the statuses
-    },
-    getStatus: async function (statusId) {
-        // the status is retrieved and then the callback function is called with the status
-    },
     getCardsByBoardId: async function (boardId) {
         return await apiGet(`/api/boards/${boardId}/cards/`);
     },
@@ -25,9 +19,6 @@ export let dataHandler = {
         const data = {boardTitle: boardTitle};
         return await apiPost(`/api/boards/`, data);
     },
-    createNewCard: async function (cardTitle, boardId, statusId) {
-        // creates new card, saves it and calls the callback function with its data
-    },
     createEmptyCard: async function (boardId, cardTitle) {
         // creates an empty card which values can be updated later
         const cards = await this.getCardsByBoardId(boardId);
@@ -39,6 +30,11 @@ export let dataHandler = {
         const items = await this.getItemsByCardId(cardId);
         const data = {itemTitle: "new item", cardId: cardId, itemOrder: items.length + 1};
         return await apiPost(`/api/cards/${cardId}/items/`, data)
+    },
+    changeBoardTitle: async function (boardId, boardTitle) {
+        // changes title of a board
+        const data = {boardTitle: boardTitle, boardId: boardId};
+        await apiPut(`/api/boards/${boardId}/title/`, data)
     }
 };
 
@@ -67,8 +63,14 @@ async function apiPost(url, payload) {
 async function apiDelete(url) {
 }
 
-async function apiPut(url) {
-
+async function apiPut(url, payload) {
+    await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+    });
 }
 
 async function apiPatch(url) {

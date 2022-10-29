@@ -57,6 +57,18 @@ def create_new_board():
         return queries.create_empty_board(board_title)
 
 
+@app.route("/api/boards/<int:board_id>/title/", methods=["POST"])
+def update_board_title(board_id: int):
+    """
+    Changes a title of a board
+    """
+    if request.method == "POST":
+        data = request.get_json()
+        board_title = data["boardTitle"]
+        queries.update_board_title(board_id, board_title)
+        return redirect('/boards')
+
+
 @app.route("/api/boards/<int:board_id>/cards/", methods=["POST"])
 @json_response
 def add_empty_card(board_id: int):

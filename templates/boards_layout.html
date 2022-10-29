@@ -1,15 +1,19 @@
 {% extends "layout.html" %}
 {% block content %}
     {#        <div id="root"></div>#}
-        <div class="new-board-wrapper">
-            <button class="page-button" id="new-board-button">Create new board</button>
-        </div>
+    <div class="new-board-wrapper">
+        <button class="page-button" id="new-board-button">Create new board</button>
+    </div>
     <div class="center-all-content">
         <div class="all-boards-container" id="root">
 
             <div class="single-board">
                 <div class="board-header">
                     <div class="board-name">Test board</div>
+                    <form id="test" class="hide-display">
+                        <input type="text" placeholder="Board name" class="board-name board-name-edit">
+                        <input type="submit" class="page-button" value="Submit">
+                    </form>
                     <hr>
                     <button class="page-button">Add new card</button>
                 </div>

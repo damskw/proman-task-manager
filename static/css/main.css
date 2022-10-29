@@ -300,3 +300,20 @@ nav ul li a {
     justify-content: flex-end;
     margin-top: 3em;
 }
+
+.board-name-edit {
+    background: transparent;
+    border: none;
+}
+
+.board-name-edit:focus {
+    outline: none;
+}
+
+.hide-display {
+    display: none;
+}
+
+.show-display {
+    display: block;
+}

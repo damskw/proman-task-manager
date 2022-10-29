@@ -25,7 +25,11 @@ export function htmlFactory(template) {
 function boardBuilder(board) {
     return `<div class="single-board" data-board-id=${board.id}>
                 <div class="board-header">
-                    <div class="board-name">${board.title}</div>
+                    <div class="board-name" data-board-title-id=${board.id}>${board.title}</div>
+                    <form class="hide-display" id="edit-title-form" data-edit-board-name-id=${board.id}>
+                        <input type="text" name="board-title" placeholder="${board.title}" class="board-name board-name-edit">
+                        <input type="submit" class="page-button" value="Submit">
+                    </form>
                     <hr>
                     <button class="page-button" data-new-card-board-id=${board.id}>Add new card</button>
                 </div>
