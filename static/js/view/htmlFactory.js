@@ -42,6 +42,14 @@ function boardBuilder(board) {
 function cardBuilder(card) {
     return `<div class="single-card" data-card-id="${card.id}">
                 <div class="card-name">${card.title}</div>
+                    <div class="edit-card-name-wrapper hide-display" data-edit-card-name-id=${card.id}>
+                        <form id="card-edit-form">
+                            <input type="text" placeholder="${card.title}" class="card-name card-name-edit">
+                            <input type="submit" class="page-button" value="Submit">
+                        </form>
+                    </div>
+
+                
                 <div class="single-card-item-section" data-card-id-item-section="${card.id}">
                 
                 </div>

@@ -301,13 +301,32 @@ nav ul li a {
     margin-top: 3em;
 }
 
-.board-name-edit {
+.board-name-edit, .card-name-edit {
     background: transparent;
     border: none;
 }
 
 .board-name-edit:focus {
     outline: none;
+}
+
+#card-edit-form {
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#card-edit-form > input:focus {
+    outline: none;
+}
+
+#card-edit-form > input {
+    text-align: center;
+}
+
+#card-edit-form > .page-button {
+    padding: 0;
 }
 
 .hide-display {
