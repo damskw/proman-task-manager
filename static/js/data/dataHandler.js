@@ -35,6 +35,11 @@ export let dataHandler = {
         // changes title of a board
         const data = {boardTitle: boardTitle, boardId: boardId};
         await apiPut(`/api/boards/${boardId}/title/`, data)
+    },
+    changeCardName: async function (cardId, cardName) {
+        // changes name of a card
+        const data = {cardName: cardName, cardId: cardId};
+        await apiPut(`/api/cards/${cardId}/title/`, data)
     }
 };
 

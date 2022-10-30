@@ -41,10 +41,10 @@ function boardBuilder(board) {
 
 function cardBuilder(card) {
     return `<div class="single-card" data-card-id="${card.id}">
-                <div class="card-name">${card.title}</div>
+                <div class="card-name" data-card-name-id="${card.id}">${card.title}</div>
                     <div class="edit-card-name-wrapper hide-display" data-edit-card-name-id=${card.id}>
-                        <form id="card-edit-form">
-                            <input type="text" placeholder="${card.title}" class="card-name card-name-edit">
+                        <form id="card-edit-form" data-form-edit-card-id="${card.id}">
+                            <input type="text" name="card-title" placeholder="${card.title}" class="card-name card-name-edit">
                             <input type="submit" class="page-button" value="Submit">
                         </form>
                     </div>

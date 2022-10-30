@@ -125,3 +125,15 @@ def update_board_title(board_id, board_title):
         WHERE boards.id = %(board_id)s;
         """
         , {"board_id": board_id, "board_title": board_title})
+
+
+def update_card_name(card_id, card_name):
+    data_manager.execute_insert(
+        """
+        UPDATE cards
+        SET title = %(card_name)s
+        WHERE cards.id = %(card_id)s;
+        SELECT * from cards
+        WHERE cards.id = %(card_id)s;
+        """
+        , {"card_id": card_id, "card_name": card_name})
