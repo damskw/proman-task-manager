@@ -11,15 +11,77 @@ export let boardsManager = {
             const content = boardBuilder(board);
             domManager.addChild("#root", content);
             domManager.addEventListener(
-                `.toggle-board-button[data-board-id="${board.id}"]`,
+                `.page-button[data-new-card-board-id="${board.id}"]`,
                 "click",
-                showHideButtonHandler
+                addCard
+            );
+            domManager.addEventListener(
+                `.board-name[data-board-title-id="${board.id}"]`,
+                "click",
+                revealEditBoardTitleForm
+            );
+            await cardsManager.loadCards(board.id);
+        }
+    }, createNewBoard: async function () {
+        const newBoardTitle = "New board";
+        const board = await dataHandler.createNewBoard(newBoardTitle);
+        const boardBuilder = htmlFactory(htmlTemplates.board);
+        const content = boardBuilder(board);
+        domManager.addChild("#root", content);
+        domManager.addEventListener(
+            `.page-button[data-new-card-board-id="${board.id}"]`,
+            "click",
+            addCard
+        );
+        domManager.addEventListener(
+            `.board-name[data-board-title-id="${board.id}"]`,
+            "click",
+            revealEditBoardTitleForm
+        );
+        const defaultCardTitles = ["New", "In Progress", "Testing", "Done"];
+        for (const cardTitle of defaultCardTitles) {
+            const card = await dataHandler.createEmptyCard(board.id, cardTitle);
+            const cardBuilder = htmlFactory(htmlTemplates.card);
+            const content = cardBuilder(card);
+            domManager.addChild(`.cards-container[data-board-cards-container-id="${board.id}"]`, content);
+            domManager.addEventListener(
+                `.transparent-button[data-add-item-button-card-id="${card.id}"]`,
+                "click",
+                cardsManager.addItem
             );
         }
-    },
+    }
 };
 
-function showHideButtonHandler(clickEvent) {
-    const boardId = clickEvent.target.dataset.boardId;
-    cardsManager.loadCards(boardId);
+async function addCard(clickEvent) {
+    const cardTitle = "new card";
+    const boardId = clickEvent.target.dataset.newCardBoardId;
+    const card = await dataHandler.createEmptyCard(boardId, cardTitle);
+    const cardBuilder = htmlFactory(htmlTemplates.card);
+    const content = cardBuilder(card);
+    domManager.addChild(`.cards-container[data-board-cards-container-id="${boardId}"]`, content);
+    domManager.addEventListener(
+        `.transparent-button[data-add-item-button-card-id="${card.id}"]`,
+        "click",
+        cardsManager.addItem
+    );
+}
+
+function revealEditBoardTitleForm(clickEvent) {
+    const boardId = clickEvent.target.dataset.boardTitleId;
+    const boardTitle = document.querySelector(`.board-name[data-board-title-id="${boardId}"]`);
+    const form = document.querySelector(`#edit-title-form[data-edit-board-name-id="${boardId}"]`);
+    boardTitle.classList.add("hide-display");
+    form.classList.add("show-display");
+    form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const data = Object.fromEntries(new FormData(e.target).entries());
+        if (data["board-title"]) {
+            await dataHandler.changeBoardTitle(boardId, data["board-title"]);
+            boardTitle.innerText = data["board-title"];
+        }
+        boardTitle.classList.remove("hide-display");
+        form.classList.remove("show-display");
+        form["board-title"].style.color = "gray";
+    })
 }
