@@ -14,6 +14,13 @@ export let pageManager = {
             "click",
             boardsManager.createNewBoard
         );
+    }, activateArrows: function () {
+        const boardArrows = document.querySelectorAll(".board-name-arrow");
+        console.log(boardArrows);
+        boardArrows.forEach(arrow => {
+            arrow.addEventListener("click", toggleBoard);
+            console.log(arrow);
+        })
     }
 }
 
@@ -21,4 +28,12 @@ export let pageManager = {
 function toggleNavBarMenu() {
     let subMenu = document.querySelector("#subMenu");
     subMenu.classList.toggle("open-menu");
+}
+
+function toggleBoard(clickEvent) {
+    const boardId = clickEvent.target.dataset.arrowBoardId;
+    console.log(boardId);
+    const board = document.querySelector(`.single-board[data-board-id="${boardId}"]`)
+    clickEvent.target.classList.toggle("rotate-transition");
+    board.classList.toggle("hide-board");
 }

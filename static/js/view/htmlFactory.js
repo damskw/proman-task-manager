@@ -32,6 +32,7 @@ function boardBuilder(board) {
                     </form>
                     <hr>
                     <button class="page-button" data-new-card-board-id=${board.id}>Add new card</button>
+                    <i class="fa-sharp fa-solid fa-arrow-up board-name-arrow" data-arrow-board-id=${board.id}></i>
                 </div>
                 <div class="cards-container" data-board-cards-container-id=${board.id}>
                 

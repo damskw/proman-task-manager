@@ -262,6 +262,8 @@ nav ul li a {
 .single-board {
     width: 90%;
     margin-bottom: 5em;
+    max-height: 300em;
+    transition: max-height 2s;
 }
 
 .card-name {
@@ -335,4 +337,22 @@ nav ul li a {
 
 .show-display {
     display: block;
+}
+
+.rotate-transition {
+    transform: rotate(180deg);
+    transition: transform 0.4s ease-in-out;
+}
+
+.board-name-arrow {
+    font-size: 1.7em;
+    cursor: pointer;
+    float: right;
+    transition: transform 0.4s ease-in-out;
+}
+
+.hide-board {
+    transition: max-height 0.5s ease;
+    max-height: 9em;
+    overflow: hidden;
 }
