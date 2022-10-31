@@ -2,6 +2,7 @@ import {dataHandler} from "../data/dataHandler.js";
 import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
 import {cardsManager} from "./cardsManager.js";
+import {pageManager} from "./pageManager.js";
 
 export let boardsManager = {
     loadBoards: async function () {
@@ -10,21 +11,7 @@ export let boardsManager = {
             const boardBuilder = htmlFactory(htmlTemplates.board);
             const content = boardBuilder(board);
             domManager.addChild("#root", content);
-            domManager.addEventListener(
-                `.page-button[data-new-card-board-id="${board.id}"]`,
-                "click",
-                addCard
-            );
-            domManager.addEventListener(
-                `.board-name[data-board-title-id="${board.id}"]`,
-                "click",
-                revealEditBoardTitleForm
-            );
-            domManager.addEventListener(
-                `#trash-icon-delete-board[data-board-delete-icon-id="${board.id}"]`,
-                "click",
-                openConfirmationModal
-            )
+            addBoardDefaultEventListeners(board.id);
             await cardsManager.loadCards(board.id);
         }
     }, createNewBoard: async function () {
@@ -33,35 +20,49 @@ export let boardsManager = {
         const boardBuilder = htmlFactory(htmlTemplates.board);
         const content = boardBuilder(board);
         domManager.addChild("#root", content);
-        domManager.addEventListener(
-            `.page-button[data-new-card-board-id="${board.id}"]`,
-            "click",
-            addCard
-        );
-        domManager.addEventListener(
-            `.board-name[data-board-title-id="${board.id}"]`,
-            "click",
-            revealEditBoardTitleForm
-        );
-        domManager.addEventListener(
-            `#trash-icon-delete-board[data-board-delete-icon-id="${board.id}"]`,
-            "click",
-            openConfirmationModal
-        );
-        const defaultCardTitles = ["New", "In Progress", "Testing", "Done"];
-        for (const cardTitle of defaultCardTitles) {
-            const card = await dataHandler.createEmptyCard(board.id, cardTitle);
-            const cardBuilder = htmlFactory(htmlTemplates.card);
-            const content = cardBuilder(card);
-            domManager.addChild(`.cards-container[data-board-cards-container-id="${board.id}"]`, content);
-            domManager.addEventListener(
-                `.transparent-button[data-add-item-button-card-id="${card.id}"]`,
-                "click",
-                cardsManager.addItem
-            );
-        }
+        addBoardDefaultEventListeners(board.id);
+        await createDefaultCards(board.id);
+        pageManager.activateArrows();
     }
 };
+
+async function createDefaultCards(boardId) {
+    const defaultCardTitles = ["New", "In Progress", "Testing", "Done"];
+    for (const cardTitle of defaultCardTitles) {
+        const card = await dataHandler.createEmptyCard(boardId, cardTitle);
+        const cardBuilder = htmlFactory(htmlTemplates.card);
+        const content = cardBuilder(card);
+        domManager.addChild(`.cards-container[data-board-cards-container-id="${boardId}"]`, content);
+        domManager.addEventListener(
+            `.transparent-button[data-add-item-button-card-id="${card.id}"]`,
+            "click",
+            cardsManager.addItem
+        );
+        domManager.addEventListener(
+            `.card-name[data-card-name-id="${card.id}"]`,
+            "click",
+            cardsManager.revealEditCardNameForm
+        )
+    }
+}
+
+function addBoardDefaultEventListeners(boardId) {
+    domManager.addEventListener(
+        `.page-button[data-new-card-board-id="${boardId}"]`,
+        "click",
+        addCard
+    );
+    domManager.addEventListener(
+        `.board-name[data-board-title-id="${boardId}"]`,
+        "click",
+        revealEditBoardTitleForm
+    );
+    domManager.addEventListener(
+        `#trash-icon-delete-board[data-board-delete-icon-id="${boardId}"]`,
+        "click",
+        openConfirmationModal
+    )
+}
 
 async function addCard(clickEvent) {
     const cardTitle = "new card";

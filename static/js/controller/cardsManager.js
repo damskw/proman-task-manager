@@ -20,9 +20,11 @@ export let cardsManager = {
                 `.card-name[data-card-name-id="${card.id}"]`,
                 "click",
                 revealEditCardNameForm
-            )
+            );
         }
-    }, addItem,
+    },
+    addItem,
+    revealEditCardNameForm,
 };
 
 async function addItem(clickEvent) {
