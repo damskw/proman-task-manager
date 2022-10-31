@@ -16,10 +16,8 @@ export let pageManager = {
         );
     }, activateArrows: function () {
         const boardArrows = document.querySelectorAll(".board-name-arrow");
-        console.log(boardArrows);
         boardArrows.forEach(arrow => {
             arrow.addEventListener("click", toggleBoard);
-            console.log(arrow);
         })
     }
 }
@@ -32,7 +30,6 @@ function toggleNavBarMenu() {
 
 function toggleBoard(clickEvent) {
     const boardId = clickEvent.target.dataset.arrowBoardId;
-    console.log(boardId);
     const board = document.querySelector(`.single-board[data-board-id="${boardId}"]`)
     clickEvent.target.classList.toggle("rotate-transition");
     board.classList.toggle("hide-board");

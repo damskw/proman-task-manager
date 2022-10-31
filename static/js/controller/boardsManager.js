@@ -20,6 +20,11 @@ export let boardsManager = {
                 "click",
                 revealEditBoardTitleForm
             );
+            domManager.addEventListener(
+                `#trash-icon-delete-board[data-board-delete-icon-id="${board.id}"]`,
+                "click",
+                openConfirmationModal
+            )
             await cardsManager.loadCards(board.id);
         }
     }, createNewBoard: async function () {
@@ -37,6 +42,11 @@ export let boardsManager = {
             `.board-name[data-board-title-id="${board.id}"]`,
             "click",
             revealEditBoardTitleForm
+        );
+        domManager.addEventListener(
+            `#trash-icon-delete-board[data-board-delete-icon-id="${board.id}"]`,
+            "click",
+            openConfirmationModal
         );
         const defaultCardTitles = ["New", "In Progress", "Testing", "Done"];
         for (const cardTitle of defaultCardTitles) {
@@ -84,4 +94,54 @@ function revealEditBoardTitleForm(clickEvent) {
         form.classList.remove("show-display");
         form["board-title"].style.color = "gray";
     })
+}
+
+function openConfirmationModal(clickEvent) {
+    const boardId = clickEvent.target.dataset.boardDeleteIconId;
+    const yesButton = document.querySelector("#yes-delete-button");
+    yesButton.boardId = boardId;
+    const confirmationModal = document.querySelector("#modal-delete-confirmation");
+    confirmationModal.style.display = "block";
+    domManager.addEventListener(
+        "#modal-close-button",
+        "click",
+        closeModal
+    )
+    domManager.addEventListener(
+        "#yes-delete-button",
+        "click",
+        initDeleteBoard
+    )
+    domManager.addEventListener(
+        "#no-delete-button",
+        "click",
+        closeModal
+    )
+}
+
+
+function closeModal() {
+    const confirmationModal = document.querySelector("#modal-delete-confirmation");
+    confirmationModal.style.display = "none";
+}
+
+async function initDeleteBoard(clickEvent) {
+    closeModal();
+    await dataHandler.deleteBoard(clickEvent.target.boardId)
+    domManager.removeEventListener(
+        "#modal-close-button",
+        "click",
+        closeModal
+    )
+    domManager.removeEventListener(
+        "#yes-delete-button",
+        "click",
+        initDeleteBoard
+    )
+    domManager.removeEventListener(
+        "#no-delete-button",
+        "click",
+        closeModal
+    )
+    document.location.reload();
 }

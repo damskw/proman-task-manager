@@ -137,3 +137,19 @@ def update_card_name(card_id, card_name):
         WHERE cards.id = %(card_id)s;
         """
         , {"card_id": card_id, "card_name": card_name})
+
+
+def delete_board(board_id):
+    data_manager.execute_insert(
+        """
+        DELETE FROM items
+        WHERE card_id IN (SELECT id FROM cards
+                          WHERE board_id = %(board_id)s);
+                          
+        DELETE FROM cards
+        WHERE board_id = %(board_id)s;
+        
+        DELETE FROM boards
+        WHERE id = %(board_id)s;
+        """
+        , {"board_id": board_id})

@@ -40,6 +40,10 @@ export let dataHandler = {
         // changes name of a card
         const data = {cardName: cardName, cardId: cardId};
         await apiPut(`/api/cards/${cardId}/title/`, data)
+    },
+    deleteBoard: async function (boardId) {
+        // deletes board with items and cards
+        await apiDelete(`/api/boards/${boardId}/delete/`)
     }
 };
 
@@ -66,6 +70,12 @@ async function apiPost(url, payload) {
 }
 
 async function apiDelete(url) {
+    await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
 }
 
 async function apiPut(url, payload) {

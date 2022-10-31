@@ -1,6 +1,14 @@
 {% extends "layout.html" %}
 {% block content %}
     {#        <div id="root"></div>#}
+    <div class="modal" id="modal-delete-confirmation">
+        <div class="modal-content">
+            <span class="close" id="modal-close-button">&times;</span>
+            <p>Are you sure you want to delete this board?</p>
+            <button class="page-button" id="yes-delete-button">Yes</button>
+            <button class="page-button" id="no-delete-button">No</button>
+        </div>
+    </div>
     <div class="new-board-wrapper">
         <button class="page-button" id="new-board-button">Create new board</button>
     </div>
@@ -9,11 +17,14 @@
 
             <div class="single-board">
                 <div class="board-header">
-                    <div class="board-name">Test board</div>
-                    <form id="test" class="hide-display">
-                        <input type="text" placeholder="Board name" class="board-name board-name-edit">
-                        <input type="submit" class="page-button" value="Submit">
-                    </form>
+                    <div class="board-header-buttons">
+                        <div class="board-name">Test board</div>
+                        <i class="fa-solid fa-trash" id="trash-icon-delete-board"></i>
+                        <form id="test" class="hide-display">
+                            <input type="text" placeholder="Board name" class="board-name board-name-edit">
+                            <input type="submit" class="page-button" value="Submit">
+                        </form>
+                    </div>
                     <hr>
                     <button class="page-button">Add new card</button>
                     <i class="fa-sharp fa-solid fa-arrow-up board-name-arrow"></i>

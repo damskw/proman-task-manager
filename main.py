@@ -9,15 +9,16 @@ app = Flask(__name__)
 load_dotenv()
 
 
-@app.route("/")
-def index():
-    """
-    This is a one-pager which shows all the boards and cards
-    """
-    return render_template('index.html')
+# @app.route("/")
+# def index():
+#     """
+#     This is a one-pager which shows all the boards and cards
+#     """
+#     return render_template('index.html')
 
 
 @app.route("/boards")
+@app.route("/")
 def boards():
     """
     For testing purposes only
@@ -55,6 +56,17 @@ def create_new_board():
         data = request.get_json()
         board_title = data["boardTitle"]
         return queries.create_empty_board(board_title)
+
+
+@app.route("/api/boards/<int:board_id>/delete/", methods=["POST"])
+@json_response
+def delete_board(board_id: int):
+    """
+    Deletes board along with items and cards assigned to it
+    :param board_id: id of the board
+    """
+    if request.method == "POST":
+        return queries.delete_board(board_id)
 
 
 @app.route("/api/boards/<int:board_id>/title/", methods=["POST"])
