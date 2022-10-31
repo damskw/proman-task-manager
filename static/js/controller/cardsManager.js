@@ -11,21 +11,25 @@ export let cardsManager = {
             const content = cardBuilder(card);
             domManager.addChild(`.cards-container[data-board-cards-container-id="${boardId}"]`, content);
             await itemsManager.loadItems(card.id);
-            domManager.addEventListener(
-                `.transparent-button[data-add-item-button-card-id="${card.id}"]`,
-                "click",
-                addItem
-            );
-            domManager.addEventListener(
-                `.card-name[data-card-name-id="${card.id}"]`,
-                "click",
-                revealEditCardNameForm
-            );
+            addCardsDefaultEventListeners(card.id);
         }
     },
     addItem,
-    revealEditCardNameForm,
+    addCardsDefaultEventListeners,
 };
+
+function addCardsDefaultEventListeners(cardId) {
+    domManager.addEventListener(
+        `.transparent-button[data-add-item-button-card-id="${cardId}"]`,
+        "click",
+        addItem
+    );
+    domManager.addEventListener(
+        `.card-name[data-card-name-id="${cardId}"]`,
+        "click",
+        revealEditCardNameForm
+    );
+}
 
 async function addItem(clickEvent) {
     const cardId = clickEvent.target.dataset.addItemButtonCardId;

@@ -33,16 +33,7 @@ async function createDefaultCards(boardId) {
         const cardBuilder = htmlFactory(htmlTemplates.card);
         const content = cardBuilder(card);
         domManager.addChild(`.cards-container[data-board-cards-container-id="${boardId}"]`, content);
-        domManager.addEventListener(
-            `.transparent-button[data-add-item-button-card-id="${card.id}"]`,
-            "click",
-            cardsManager.addItem
-        );
-        domManager.addEventListener(
-            `.card-name[data-card-name-id="${card.id}"]`,
-            "click",
-            cardsManager.revealEditCardNameForm
-        )
+        cardsManager.addCardsDefaultEventListeners();
     }
 }
 
