@@ -429,8 +429,13 @@ nav ul li a {
 
 #delete-item-button {
     float: right;
+    visibility: hidden;
 }
 
 #delete-item-button:hover {
     color: red;
+}
+
+.card-item:hover #delete-item-button {
+    visibility: visible;
 }
