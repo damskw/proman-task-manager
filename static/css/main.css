@@ -269,9 +269,12 @@ nav ul li a {
 }
 
 .card-name {
+    width: 50%;
     margin-top: 0.5em;
     margin-bottom: 0.5em;
     font-weight: bold;
+    display: flex;
+    justify-content: center;
 }
 
 .card-item {
@@ -328,6 +331,7 @@ nav ul li a {
 
 #card-edit-form > input {
     text-align: center;
+    width: 100%;
 }
 
 #card-edit-form > .page-button {
@@ -432,10 +436,37 @@ nav ul li a {
     visibility: hidden;
 }
 
-#delete-item-button:hover {
+#delete-item-button:hover, #delete-card-button:hover {
     color: red;
+    cursor: pointer;
 }
 
 .card-item:hover #delete-item-button {
     visibility: visible;
+}
+
+#delete-card-button {
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    visibility: hidden;
+}
+
+.card-header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fill-space {
+    width: 25%;
+}
+
+.single-card:hover #delete-card-button {
+    visibility: visible;
+}
+
+.card-header-wrapper {
+    width: 100%;
 }

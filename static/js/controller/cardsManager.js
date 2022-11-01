@@ -29,6 +29,11 @@ function addCardsDefaultEventListeners(cardId) {
         "click",
         revealEditCardNameForm
     );
+    domManager.addEventListener(
+        `#delete-card-button[data-delete-card-button-id="${cardId}"]`,
+        "click",
+        deleteCard
+    )
 }
 
 async function addItem(clickEvent) {
@@ -44,10 +49,11 @@ async function addItem(clickEvent) {
 
 function revealEditCardNameForm(clickEvent) {
     const cardId = clickEvent.target.dataset.cardNameId;
-    const cardName = document.querySelector(`.card-name[data-card-name-id="${cardId}"]`);
+    const cardHeaderWrapper = document.querySelector(`.card-header-wrapper[data-card-header-id="${cardId}"]`);
+    const cardName = document.querySelector(`.card-name[data-card-name-id="${cardId}"]`)
     const form = document.querySelector(`#card-edit-form[data-form-edit-card-id="${cardId}"]`);
     const formWrapper = document.querySelector(`.edit-card-name-wrapper[data-edit-card-name-id="${cardId}"]`);
-    cardName.classList.add("hide-display");
+    cardHeaderWrapper.classList.add("hide-display");
     formWrapper.classList.add("show-display");
     form.addEventListener("submit", async function (e) {
         e.preventDefault()
@@ -56,8 +62,15 @@ function revealEditCardNameForm(clickEvent) {
             await dataHandler.changeCardName(cardId, data["card-title"]);
             cardName.innerText = data["card-title"];
         }
-        cardName.classList.remove("hide-display");
+        cardHeaderWrapper.classList.remove("hide-display");
         formWrapper.classList.remove("show-display");
         form["card-title"].style.color = "gray";
     })
+}
+
+async function deleteCard(clickEvent) {
+    const cardId = clickEvent.target.dataset.deleteCardButtonId;
+    const card = document.querySelector(`.single-card[data-card-id="${cardId}"]`);
+    await dataHandler.deleteCard(cardId);
+    card.remove();
 }

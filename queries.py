@@ -162,3 +162,15 @@ def delete_item(item_id):
         WHERE id = %(item_id)s;
         """
         , {"item_id": item_id})
+
+
+def delete_card(card_id):
+    data_manager.execute_insert(
+        """
+        DELETE FROM items
+        WHERE card_id = %(card_id)s;
+
+        DELETE FROM cards
+        WHERE id = %(card_id)s;
+        """
+        , {"card_id": card_id})

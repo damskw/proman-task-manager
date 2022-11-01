@@ -80,6 +80,17 @@ def delete_item(item_id: int):
         return queries.delete_item(item_id)
 
 
+@app.route("/api/cards/<int:card_id>/delete/", methods=["POST"])
+@json_response
+def delete_card(card_id: int):
+    """
+    Deletes card along with its items
+    :param card_id: id of a card
+    """
+    if request.method == "POST":
+        return queries.delete_card(card_id)
+
+
 @app.route("/api/boards/<int:board_id>/title/", methods=["POST"])
 def update_board_title(board_id: int):
     """

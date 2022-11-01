@@ -48,6 +48,10 @@ export let dataHandler = {
     deleteItem: async function (itemId) {
         // deletes item from a card
         await apiDelete(`/api/items/${itemId}/delete/`)
+    },
+    deleteCard: async function (cardId) {
+        // deletes card with items
+        await apiDelete(`/api/cards/${cardId}/delete/`)
     }
 };
 
