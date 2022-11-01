@@ -33,7 +33,7 @@ async function createDefaultCards(boardId) {
         const cardBuilder = htmlFactory(htmlTemplates.card);
         const content = cardBuilder(card);
         domManager.addChild(`.cards-container[data-board-cards-container-id="${boardId}"]`, content);
-        cardsManager.addCardsDefaultEventListeners();
+        cardsManager.addCardsDefaultEventListeners(card.id);
     }
 }
 
@@ -89,6 +89,9 @@ function revealEditBoardTitleForm(clickEvent) {
 }
 
 function openConfirmationModal(clickEvent) {
+    const modalBuilder = htmlFactory(htmlTemplates.deleteModal);
+    const content = modalBuilder()
+    domManager.addChild("#root", content);
     const boardId = clickEvent.target.dataset.boardDeleteIconId;
     const yesButton = document.querySelector("#yes-delete-button");
     yesButton.boardId = boardId;
@@ -115,6 +118,7 @@ function openConfirmationModal(clickEvent) {
 function closeModal() {
     const confirmationModal = document.querySelector("#modal-delete-confirmation");
     confirmationModal.style.display = "none";
+    confirmationModal.remove();
 }
 
 async function initDeleteBoard(clickEvent) {

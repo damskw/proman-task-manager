@@ -1,13 +1,15 @@
 export const htmlTemplates = {
     board: 1,
     card: 2,
-    item: 3
+    item: 3,
+    deleteModal: 4,
 }
 
 export const builderFunctions = {
     [htmlTemplates.board]: boardBuilder,
     [htmlTemplates.card]: cardBuilder,
-    [htmlTemplates.item]: itemBuilder
+    [htmlTemplates.item]: itemBuilder,
+    [htmlTemplates.deleteModal]: deleteModalBuilder,
 };
 
 export function htmlFactory(template) {
@@ -68,14 +70,13 @@ function itemBuilder(item) {
 }
 
 
-// function boardBuilder(board) {
-//     return `<div class="board-container">
-//                 <div class="board" data-board-id=${board.id}>${board.title}</div>
-//                 <button class="toggle-board-button" data-board-id="${board.id}">Show Cards</button>
-//             </div>`;
-// }
-
-// function cardBuilder(card) {
-//     return `<div class="card" data-card-id="${card.id}">${card.title}</div>`;
-// }
-
+function deleteModalBuilder() {
+    return `<div class="modal" id="modal-delete-confirmation">
+                <div class="modal-content">
+                <span class="close" id="modal-close-button">&times;</span>
+                <p>Are you sure you want to delete this board?</p>
+                <button class="page-button" id="yes-delete-button">Yes</button>
+                <button class="page-button" id="no-delete-button">No</button>
+                </div>
+            </div>`
+}
