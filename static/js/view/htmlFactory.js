@@ -73,8 +73,18 @@ function cardBuilder(card) {
 
 function itemBuilder(item) {
     return `<div class="card-item" data-item-id="${item.id}">
-                <div class="item-name">${item.title}</div>
-                <span id="delete-item-button" data-item-delete-button-id="${item.id}">&times;</span>
+                <div class="card-item-wrapper" data-item-wrapper-id="${item.id}">
+                    <div class="item-name-wrapper">
+                        <div class="item-name" data-item-name-id="${item.id}">${item.title}</div>
+                        <span id="delete-item-button" data-item-delete-button-id="${item.id}">&times;</span>
+                    </div>
+                </div>
+                <div class="edit-item-form-wrapper hide-display" data-edit-form-item-wrapper-id=${item.id}>
+                    <form id="edit-item-form" data-form-edit-item-id="${item.id}">
+                       <textarea name="item-name" id="edit-item-area">${item.title}</textarea>
+                       <input type="submit" id="submit-edit-item" class="page-button" value="Submit">
+                    </form>
+                </div>
             </div>`;
 }
 
