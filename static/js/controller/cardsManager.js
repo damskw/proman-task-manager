@@ -38,6 +38,7 @@ async function addItem(clickEvent) {
         const itemBuilder = htmlFactory(htmlTemplates.item);
         const content = itemBuilder(item);
         domManager.addChild(`.single-card-item-section[data-card-id-item-section="${cardId}"]`, content);
+        itemsManager.addItemsDefaultEventListeners(item.id)
     })
 }
 

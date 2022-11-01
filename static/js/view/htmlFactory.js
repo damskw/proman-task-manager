@@ -66,7 +66,10 @@ function cardBuilder(card) {
 }
 
 function itemBuilder(item) {
-    return `<div class="card-item" data-item-id="${item.id}">${item.title}</div>`;
+    return `<div class="card-item" data-item-id="${item.id}">
+                <div class="item-name">${item.title}</div>
+                <span id="delete-item-button" data-item-delete-button-id="${item.id}">&times;</span>
+            </div>`;
 }
 
 

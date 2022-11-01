@@ -153,3 +153,12 @@ def delete_board(board_id):
         WHERE id = %(board_id)s;
         """
         , {"board_id": board_id})
+
+
+def delete_item(item_id):
+    data_manager.execute_insert(
+        """
+        DELETE FROM items
+        WHERE id = %(item_id)s;
+        """
+        , {"item_id": item_id})

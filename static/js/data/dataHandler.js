@@ -44,6 +44,10 @@ export let dataHandler = {
     deleteBoard: async function (boardId) {
         // deletes board with items and cards
         await apiDelete(`/api/boards/${boardId}/delete/`)
+    },
+    deleteItem: async function (itemId) {
+        // deletes item from a card
+        await apiDelete(`/api/items/${itemId}/delete/`)
     }
 };
 

@@ -9,7 +9,24 @@ export let itemsManager = {
             const itemBuilder = htmlFactory(htmlTemplates.item);
             const content = itemBuilder(item);
             domManager.addChild(`.single-card-item-section[data-card-id-item-section="${cardId}"]`, content);
+            addItemsDefaultEventListeners(item.id);
         }
-    },
+    }, addItemsDefaultEventListeners,
 };
 
+
+function addItemsDefaultEventListeners(itemId) {
+    domManager.addEventListener(
+        `#delete-item-button[data-item-delete-button-id="${itemId}"]`,
+    "click",
+        deleteItem
+    );
+
+}
+
+async function deleteItem(clickEvent) {
+    const itemId = clickEvent.target.dataset.itemDeleteButtonId;
+    const item = document.querySelector(`.card-item[data-item-id="${itemId}"]`);
+    await dataHandler.deleteItem(itemId);
+    item.remove();
+}
