@@ -135,7 +135,7 @@ function loginModalBuilder() {
     return `    <form id="login-modal-form">
                     <div class="inputs-wrapper">
                         <div class="input-group">
-                            <input required="" type="email" name="e-mail" autocomplete="off" class="input">
+                            <input required="" type="email" name="email" autocomplete="off" class="input">
                             <label class="user-label">User E-mail</label>
                         </div>
                         <div class="input-group">
@@ -143,6 +143,7 @@ function loginModalBuilder() {
                             <label class="user-label">Password</label>
                         </div>
                         <input type="submit" class="page-button" value="Login">
+                        <p id="login-notification"></p>
                         <p id="redirect-register">Don't have an account? Register here.</p>
                         <p id="lost-password">Lost password? Click here.</p>
                     </div>

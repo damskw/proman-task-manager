@@ -21,11 +21,16 @@ export let pageManager = {
         boardArrows.forEach(arrow => {
             arrow.addEventListener("click", toggleBoard);
         })
-    }, activateLoginButton: function () {
-        domManager.addEventListener(
+    }, activateLoginLogoutButtons: function () {
+        domManager.addEventListenerIfExists(
             "#login-register-li",
             "click",
             openLoginRegisterModal
+        )
+        domManager.addEventListenerIfExists(
+            "#logout-li",
+            "click",
+            logout
         )
     },
     preLoadPage,
@@ -51,6 +56,11 @@ function preLoadPage() {
     const content = spinnerBuilder();
     domManager.addChild(".spinner-wrapper", content);
     pageContent.style.display = "none";
+}
+
+async function logout() {
+    await dataHandler.logoutUser();
+    window.location.href = '/';
 }
 
 function loadPageContent() {
@@ -83,8 +93,7 @@ function openLoginModal() {
     form.addEventListener("submit", async function (e) {
         e.preventDefault();
         const data = Object.fromEntries(new FormData(e.target).entries());
-        initLogin();
-        closeModal();
+        initLogin(data);
     })
     domManager.addEventListener(
         "#redirect-register",
@@ -109,28 +118,43 @@ function openRegisterModal() {
     )
 }
 
-function initLogin() {
-
+async function initLogin(data) {
+    const user = await dataHandler.loginUser(data["email"], data["password"]);
+    if (!user["email"]) {
+        sendLoginErrorNotification("Error: User with that email not found. Do you want to register?");
+        return
+    }
+    if (!user["password"]) {
+        sendLoginErrorNotification("Error: Invalid password, try again.");
+        return
+    }
+    closeModal()
+    window.location.href = '/';
 }
 
 async function initRegister(data) {
-    const registerNotification = document.querySelector("#register-notification");
     if (data["password"] !== data["repeat-password"]) {
-        sendErrorNotification("Error: Passwords don't match.");
+        sendRegisterErrorNotification("Error: Passwords don't match.");
         return
     }
     const user = await dataHandler.registerUser(data["email"], data["password"]);
     if (user["email"]) {
-        sendErrorNotification("Error: User with that email already exists.");
+        sendRegisterErrorNotification("Error: User with that email already exists.");
         return
     }
     closeModal()
 }
 
-function sendErrorNotification(notification) {
+function sendRegisterErrorNotification(notification) {
     const registerNotification = document.querySelector("#register-notification");
     registerNotification.style.display = "block";
     registerNotification.innerText = notification;
+}
+
+function sendLoginErrorNotification(notification) {
+    const loginNotification = document.querySelector("#login-notification");
+    loginNotification.style.display = "block";
+    loginNotification.innerText = notification;
 }
 
 function closeModal() {

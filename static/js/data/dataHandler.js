@@ -63,6 +63,15 @@ export let dataHandler = {
         const data = {email: email, password: password};
         return await apiPost(`/api/register/`, data)
     },
+    loginUser: async function (email, password) {
+        // logins user
+        const data = {email: email, password: password};
+        return await apiPost(`/api/login/`, data)
+    },
+    logoutUser: async function () {
+        // logouts user
+        return await apiPatch(`/api/logout/`)
+    },
 };
 
 async function apiGet(url) {
@@ -107,4 +116,10 @@ async function apiPut(url, payload) {
 }
 
 async function apiPatch(url) {
+    await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
 }

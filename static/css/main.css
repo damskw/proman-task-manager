@@ -617,7 +617,7 @@ nav ul li a {
     transition: all 0.5s ease;
 }
 
-#login-register-li {
+#login-register-li, #logout-li {
     cursor: pointer;
 }
 
@@ -638,7 +638,7 @@ nav ul li a {
     transition: all 0.5s ease;
 }
 
-#register-notification {
+#register-notification, #login-notification {
     display: none;
     color: red;
 }

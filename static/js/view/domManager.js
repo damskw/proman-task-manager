@@ -23,4 +23,10 @@ export let domManager = {
             console.error("could not find such html element: " + parentIdentifier);
         }
     },
+    addEventListenerIfExists(parentIdentifier, eventType, eventHandler) {
+        const parent = document.querySelector(parentIdentifier);
+        if (parent) {
+            parent.addEventListener(eventType, eventHandler);
+        }
+    },
 };

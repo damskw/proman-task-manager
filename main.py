@@ -1,3 +1,4 @@
+import os
 import random
 
 from flask import Flask, render_template, url_for, request, redirect, session
@@ -9,6 +10,7 @@ import queries
 
 mimetypes.add_type('application/javascript', '.js')
 app = Flask(__name__)
+app.secret_key = os.environ.get('APP_KEY')
 load_dotenv()
 
 
@@ -192,6 +194,26 @@ def register():
     name = "User" + str(create_random_user_id())
     queries.register_user(data["email"], hash_password(data["password"]), name)
     return {"email": None}
+
+
+@app.route("/api/login/", methods=["POST"])
+def login():
+    data = request.get_json()
+    user = queries.check_user_existence(data["email"])
+    if not user:
+        return {"email": None}
+    if not verify_password(data["password"], user["password"]):
+        return {"email": data["email"], "password": None}
+    session["email"] = user["email"]
+    session["name"] = user["name"]
+    return user
+
+
+@app.route("/api/logout/", methods=["post"])
+def logout():
+    session.pop("email", None)
+    session.pop("name", None)
+    return render_template("index.html")
 
 
 def main():
