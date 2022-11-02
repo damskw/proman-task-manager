@@ -99,7 +99,7 @@ function itemBuilder(item) {
 
 function deleteModalBuilder() {
     return `<div class="modal" id="modal-delete-confirmation">
-                <div class="modal-content">
+                <div class="modal-content" id="modal-delete-content">
                 <span class="close" id="modal-close-button">&times;</span>
                 <p>Are you sure you want to delete this board?</p>
                 <button class="page-button" id="yes-delete-button">Yes</button>
@@ -153,7 +153,7 @@ function registerModalBuilder() {
     return `    <form id="register-modal-form">
                     <div class="inputs-wrapper">
                         <div class="input-group">
-                            <input required="" type="email" name="e-mail" autocomplete="off" class="input">
+                            <input required="" type="email" name="email" autocomplete="off" class="input">
                             <label class="user-label">User E-mail</label>
                         </div>
                         <div class="input-group">
@@ -161,10 +161,11 @@ function registerModalBuilder() {
                             <label class="user-label">Password</label>
                         </div>
                         <div class="input-group">
-                            <input required="" type="password" name="password" autocomplete="off" class="input">
+                            <input required="" type="password" name="repeat-password" autocomplete="off" class="input">
                             <label class="user-label">Repeat password</label>
                         </div>
                         <input type="submit" class="page-button" value="Register">
+                        <p id="register-notification"></p>
                         <p id="redirect-login">Already have an account? Login here.</p>
                     </div>
                 </form>`

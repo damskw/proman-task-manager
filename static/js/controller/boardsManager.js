@@ -113,8 +113,11 @@ function openConfirmationModal(clickEvent) {
 
 function closeModal() {
     const confirmationModal = document.querySelector("#modal-delete-confirmation");
-    confirmationModal.style.display = "none";
-    confirmationModal.remove();
+    const modalInternal = document.querySelector(".modal-content");
+    modalInternal.classList.add("animate-closing-modal");
+    modalInternal.addEventListener("transitionend", (e) => {
+        confirmationModal.remove();
+    })
 }
 
 async function initDeleteBoard(clickEvent) {

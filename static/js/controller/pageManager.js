@@ -1,6 +1,7 @@
 import {domManager} from "../view/domManager.js";
 import {boardsManager} from "./boardsManager.js";
 import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
+import {dataHandler} from "../data/dataHandler.js";
 
 export let pageManager = {
     activateNavBar: function () {
@@ -99,21 +100,37 @@ function openRegisterModal() {
     form.addEventListener("submit", async function (e) {
         e.preventDefault();
         const data = Object.fromEntries(new FormData(e.target).entries());
-        initRegister();
-        closeModal();
+        await initRegister(data);
     })
     domManager.addEventListener(
         "#redirect-login",
         "click",
-        closeRegisterModal)
+        closeRegisterModal
+    )
 }
 
 function initLogin() {
 
 }
 
-function initRegister() {
+async function initRegister(data) {
+    const registerNotification = document.querySelector("#register-notification");
+    if (data["password"] !== data["repeat-password"]) {
+        sendErrorNotification("Error: Passwords don't match.");
+        return
+    }
+    const user = await dataHandler.registerUser(data["email"], data["password"]);
+    if (user["email"]) {
+        sendErrorNotification("Error: User with that email already exists.");
+        return
+    }
+    closeModal()
+}
 
+function sendErrorNotification(notification) {
+    const registerNotification = document.querySelector("#register-notification");
+    registerNotification.style.display = "block";
+    registerNotification.innerText = notification;
 }
 
 function closeModal() {

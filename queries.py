@@ -186,3 +186,22 @@ def delete_card(card_id):
         WHERE id = %(card_id)s;
         """
         , {"card_id": card_id})
+
+
+def register_user(email, hashed_password, name):
+    data_manager.execute_insert(
+        """
+        INSERT INTO users(email, password, name)
+        VALUES (%(email)s, %(hashed_password)s, %(name)s);
+        """
+        , {"email": email, "hashed_password": hashed_password, "name": name})
+
+
+def check_user_existence(email):
+    matching_user = data_manager.execute_select(
+        """
+        SELECT * from users
+        WHERE email = %(email)s;
+        """
+        , {"email": email}, fetchall=False)
+    return matching_user

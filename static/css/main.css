@@ -633,3 +633,12 @@ nav ul li a {
 .animate-closing-modal {
     scale: 0;
 }
+
+#modal-delete-content {
+    transition: all 0.5s ease;
+}
+
+#register-notification {
+    display: none;
+    color: red;
+}

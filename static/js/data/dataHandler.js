@@ -57,7 +57,12 @@ export let dataHandler = {
     deleteCard: async function (cardId) {
         // deletes card with items
         await apiDelete(`/api/cards/${cardId}/delete/`)
-    }
+    },
+    registerUser: async function (email, password) {
+        // registers user
+        const data = {email: email, password: password};
+        return await apiPost(`/api/register/`, data)
+    },
 };
 
 async function apiGet(url) {

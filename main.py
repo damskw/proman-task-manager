@@ -1,6 +1,9 @@
-from flask import Flask, render_template, url_for, request, redirect
+import random
+
+from flask import Flask, render_template, url_for, request, redirect, session
 from dotenv import load_dotenv
 from util import json_response
+import bcrypt as bcrypt
 import mimetypes
 import queries
 
@@ -163,6 +166,32 @@ def get_items_for_card(card_id: int):
     :param card_id: id of the parent board
     """
     return queries.get_items_for_card(card_id)
+
+
+def hash_password(plain_text_password):
+    hashed_bytes = bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt())
+    return hashed_bytes.decode('utf-8')
+
+
+def verify_password(plain_text_password, hashed_password):
+    hashed_bytes_password = hashed_password.encode('utf-8')
+    return bcrypt.checkpw(plain_text_password.encode('utf-8'), hashed_bytes_password)
+
+
+def create_random_user_id():
+    random_id = random.randint(1, 1000000000)
+    return random_id
+
+
+@app.route("/api/register/", methods=["POST"])
+def register():
+    data = request.get_json()
+    user = queries.check_user_existence(data["email"])
+    if user:
+        return user
+    name = "User" + str(create_random_user_id())
+    queries.register_user(data["email"], hash_password(data["password"]), name)
+    return {"email": None}
 
 
 def main():
