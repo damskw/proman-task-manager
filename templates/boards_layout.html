@@ -3,82 +3,85 @@
     <div class="new-board-wrapper">
         <button class="page-button" id="new-board-button">Create new board</button>
     </div>
+    <div class="spinner-wrapper">
+    </div>
+
     <div class="center-all-content">
         <div class="all-boards-container" id="root">
-{#            <div class="single-board">#}
-{#                <div class="board-header">#}
-{#                    <div class="board-header-buttons">#}
-{#                        <div class="board-name">Test board</div>#}
-{#                        <i class="fa-solid fa-trash" id="trash-icon-delete-board"></i>#}
-{#                        <form id="test" class="hide-display">#}
-{#                            <input type="text" placeholder="Board name" class="board-name board-name-edit">#}
-{#                            <input type="submit" class="page-button" value="Submit">#}
-{#                        </form>#}
-{#                    </div>#}
-{#                    <hr>#}
-{#                    <button class="page-button">Add new card</button>#}
-{#                    <i class="fa-sharp fa-solid fa-arrow-up board-name-arrow"></i>#}
-{#                </div>#}
-{#                <div class="cards-container">#}
-{#                    <div class="single-card">#}
-{#                        <div class="card-name">Card 1</div>#}
-{#                        <div class="test">#}
-{#                            <form class="show-display" id="card-edit-form">#}
-{#                                <input type="text" placeholder="Card name" class="card-name card-name-edit">#}
-{#                                <input type="submit" class="page-button" value="Submit">#}
-{#                            </form>#}
-{#                        </div>#}
-{#                        <div class="single-card-item-section">#}
-{#                            <div class="card-item">#}
-{#                                <div class="item-name"> Item 1Item 1 Item 1 Item 1</div>#}
-{#                                <span id="delete-item-button">&times;</span></div>#}
-{#                            <div class="card-item">#}
-{#                                <div class="item-name"> Item 1Item 1 Item 1 Item 1</div>#}
-{#                                <span id="delete-item-button">&times;</span></div>#}
-{#                            <div class="card-item">#}
-{#                                <div class="item-name"> Item 1Item 1 Item 1 Item 1</div>#}
-{#                                <span id="delete-item-button">&times;</span></div>#}
-{#                        </div>#}
-{##}
-{#                        <div class="card-button-section">#}
-{#                            <button class="transparent-button">Add item</button>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                    <div class="single-card">#}
-{#                        <div class="card-name">Card 2</div>#}
-{#                        <div class="card-item">Item 1</div>#}
-{#                        <div class="card-item">Item 1</div>#}
-{#                    </div>#}
-{#                    <div class="single-card">#}
-{#                        <div class="card-name">Card 3</div>#}
-{#                        <div class="card-item">#}
-{#                            <div class="card-item-wrapper">#}
-{#                                <div class="item-name-wrapper">#}
-{#                                    <div class="item-name">Item 1</div>#}
-{#                                    <span id="delete-item-button">&times;</span></div>#}
-{#                            </div>#}
-{#                            <form id="edit-item-form">#}
-{#                                <textarea id="edit-item-area">#}
-{#                                </textarea>#}
-{#                                <input type="submit" id="submit-edit-item" class="page-button" value="Submit">#}
-{#                            </form>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                    <div class="single-card">#}
-{#                        <div class="card-header">#}
-{#                            <div class="fill-space"></div>#}
-{#                            <div class="card-name">Card 4</div>#}
-{#                            <span id="delete-card-button">&times;</span>#}
-{#                        </div>#}
-{##}
-{#                        <div class="card-item">Item 1</div>#}
-{#                    </div>#}
-{#                    <div class="single-card">#}
-{#                        <div class="card-name">Card 4</div>#}
-{#                        <div class="card-item">Item 1</div>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
+            {#            <div class="single-board">#}
+            {#                <div class="board-header">#}
+            {#                    <div class="board-header-buttons">#}
+            {#                        <div class="board-name">Test board</div>#}
+            {#                        <i class="fa-solid fa-trash" id="trash-icon-delete-board"></i>#}
+            {#                        <form id="test" class="hide-display">#}
+            {#                            <input type="text" placeholder="Board name" class="board-name board-name-edit">#}
+            {#                            <input type="submit" class="page-button" value="Submit">#}
+            {#                        </form>#}
+            {#                    </div>#}
+            {#                    <hr>#}
+            {#                    <button class="page-button">Add new card</button>#}
+            {#                    <i class="fa-sharp fa-solid fa-arrow-up board-name-arrow"></i>#}
+            {#                </div>#}
+            {#                <div class="cards-container">#}
+            {#                    <div class="single-card">#}
+            {#                        <div class="card-name">Card 1</div>#}
+            {#                        <div class="test">#}
+            {#                            <form class="show-display" id="card-edit-form">#}
+            {#                                <input type="text" placeholder="Card name" class="card-name card-name-edit">#}
+            {#                                <input type="submit" class="page-button" value="Submit">#}
+            {#                            </form>#}
+            {#                        </div>#}
+            {#                        <div class="single-card-item-section">#}
+            {#                            <div class="card-item">#}
+            {#                                <div class="item-name"> Item 1Item 1 Item 1 Item 1</div>#}
+            {#                                <span id="delete-item-button">&times;</span></div>#}
+            {#                            <div class="card-item">#}
+            {#                                <div class="item-name"> Item 1Item 1 Item 1 Item 1</div>#}
+            {#                                <span id="delete-item-button">&times;</span></div>#}
+            {#                            <div class="card-item">#}
+            {#                                <div class="item-name"> Item 1Item 1 Item 1 Item 1</div>#}
+            {#                                <span id="delete-item-button">&times;</span></div>#}
+            {#                        </div>#}
+            {##}
+            {#                        <div class="card-button-section">#}
+            {#                            <button class="transparent-button">Add item</button>#}
+            {#                        </div>#}
+            {#                    </div>#}
+            {#                    <div class="single-card">#}
+            {#                        <div class="card-name">Card 2</div>#}
+            {#                        <div class="card-item">Item 1</div>#}
+            {#                        <div class="card-item">Item 1</div>#}
+            {#                    </div>#}
+            {#                    <div class="single-card">#}
+            {#                        <div class="card-name">Card 3</div>#}
+            {#                        <div class="card-item">#}
+            {#                            <div class="card-item-wrapper">#}
+            {#                                <div class="item-name-wrapper">#}
+            {#                                    <div class="item-name">Item 1</div>#}
+            {#                                    <span id="delete-item-button">&times;</span></div>#}
+            {#                            </div>#}
+            {#                            <form id="edit-item-form">#}
+            {#                                <textarea id="edit-item-area">#}
+            {#                                </textarea>#}
+            {#                                <input type="submit" id="submit-edit-item" class="page-button" value="Submit">#}
+            {#                            </form>#}
+            {#                        </div>#}
+            {#                    </div>#}
+            {#                    <div class="single-card">#}
+            {#                        <div class="card-header">#}
+            {#                            <div class="fill-space"></div>#}
+            {#                            <div class="card-name">Card 4</div>#}
+            {#                            <span id="delete-card-button">&times;</span>#}
+            {#                        </div>#}
+            {##}
+            {#                        <div class="card-item">Item 1</div>#}
+            {#                    </div>#}
+            {#                    <div class="single-card">#}
+            {#                        <div class="card-name">Card 4</div>#}
+            {#                        <div class="card-item">Item 1</div>#}
+            {#                    </div>#}
+            {#                </div>#}
+            {#            </div>#}
 
         </div>
     </div>

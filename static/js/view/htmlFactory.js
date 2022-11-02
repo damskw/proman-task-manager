@@ -3,6 +3,7 @@ export const htmlTemplates = {
     card: 2,
     item: 3,
     deleteModal: 4,
+    spinner: 5,
 }
 
 export const builderFunctions = {
@@ -10,6 +11,7 @@ export const builderFunctions = {
     [htmlTemplates.card]: cardBuilder,
     [htmlTemplates.item]: itemBuilder,
     [htmlTemplates.deleteModal]: deleteModalBuilder,
+    [htmlTemplates.spinner]: spinnerBuilder,
 };
 
 export function htmlFactory(template) {
@@ -98,4 +100,16 @@ function deleteModalBuilder() {
                 <button class="page-button" id="no-delete-button">No</button>
                 </div>
             </div>`
+}
+
+function spinnerBuilder() {
+    return `
+                 <div class="spinner-position">
+                     <div class="spinner">
+                        <div class="dot1"></div>
+                        <div class="dot2"></div>
+                        <div class="dot3"></div>
+                     </div>
+                 </div>
+              `
 }
