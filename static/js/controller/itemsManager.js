@@ -47,9 +47,8 @@ function revealEditItemNameForm(clickEvent) {
     form.addEventListener("submit", async function (e) {
         e.preventDefault()
         const data = Object.fromEntries(new FormData(e.target).entries());
-        console.log(itemName)
         if (data["item-name"]) {
-            // await dataHandler.changeCardName(cardId, data["card-title"]);
+            await dataHandler.changeItemName(itemId, data["item-name"]);
             itemName.innerText = data["item-name"];
         }
         cardItemWrapper.classList.remove("hide-display");

@@ -29,6 +29,7 @@ def get_boards():
     return data_manager.execute_select(
         """
         SELECT * FROM boards
+        ORDER BY boards.id
         ;
         """
     )
@@ -42,6 +43,7 @@ def get_cards_for_board(board_id):
         """
         SELECT * FROM cards
         WHERE cards.board_id = %(board_id)s
+        ORDER BY cards.card_order
         ;
         """
         , {"board_id": board_id})
@@ -57,7 +59,7 @@ def get_items_for_card(card_id):
         """
         SELECT * FROM items
         WHERE items.card_id = %(card_id)s
-        ;
+        ORDER BY items.item_order;
         """
         , {"card_id": card_id})
 
@@ -137,6 +139,16 @@ def update_card_name(card_id, card_name):
         WHERE cards.id = %(card_id)s;
         """
         , {"card_id": card_id, "card_name": card_name})
+
+
+def update_item_name(item_id, item_name):
+    data_manager.execute_insert(
+        """
+        UPDATE items
+        SET title = %(item_name)s
+        WHERE items.id = %(item_id)s;
+        """
+        , {"item_id": item_id, "item_name": item_name})
 
 
 def delete_board(board_id):

@@ -62,11 +62,7 @@ async function addCard(clickEvent) {
     const cardBuilder = htmlFactory(htmlTemplates.card);
     const content = cardBuilder(card);
     domManager.addChild(`.cards-container[data-board-cards-container-id="${boardId}"]`, content);
-    domManager.addEventListener(
-        `.transparent-button[data-add-item-button-card-id="${card.id}"]`,
-        "click",
-        cardsManager.addItem
-    );
+    await cardsManager.addCardsDefaultEventListeners(card.id)
 }
 
 function revealEditBoardTitleForm(clickEvent) {

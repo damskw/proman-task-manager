@@ -41,6 +41,11 @@ export let dataHandler = {
         const data = {cardName: cardName, cardId: cardId};
         await apiPut(`/api/cards/${cardId}/title/`, data)
     },
+    changeItemName: async function (itemId, itemName) {
+        // changes name of an item
+        const data = {itemName: itemName, itemId: itemId};
+        await apiPut(`/api/items/${itemId}/title/`, data)
+    },
     deleteBoard: async function (boardId) {
         // deletes board with items and cards
         await apiDelete(`/api/boards/${boardId}/delete/`)

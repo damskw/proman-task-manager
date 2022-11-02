@@ -115,6 +115,18 @@ def update_card_name(card_id: int):
         return redirect('/boards')
 
 
+@app.route("/api/items/<int:item_id>/title/", methods=["POST"])
+def update_item_name(item_id: int):
+    """
+    Changes name of an item
+    """
+    if request.method == "POST":
+        data = request.get_json()
+        item_name = data["itemName"]
+        queries.update_item_name(item_id, item_name)
+        return redirect('/boards')
+
+
 @app.route("/api/boards/<int:board_id>/cards/", methods=["POST"])
 @json_response
 def add_empty_card(board_id: int):
