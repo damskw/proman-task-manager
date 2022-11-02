@@ -9,6 +9,7 @@ async function init() {
     pageManager.activateNavBar();
     pageManager.activateNewBoardButton();
     pageManager.activateArrows();
+    pageManager.activateLoginButton();
 }
 
 

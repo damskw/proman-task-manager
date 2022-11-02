@@ -40,7 +40,7 @@ function revealEditItemNameForm(clickEvent) {
     const itemId = clickEvent.target.dataset.itemNameId;
     const cardItemWrapper = document.querySelector(`.card-item-wrapper[data-item-wrapper-id="${itemId}"]`);
     const itemName = document.querySelector(`.item-name[data-item-name-id="${itemId}"]`)
-    const form = document.querySelector(`#edit-item-form[data-form-edit-item-id="${itemId}"]`);
+    const form = document.querySelector(`.edit-item-form[data-form-edit-item-id="${itemId}"]`);
     const formWrapper = document.querySelector(`.edit-item-form-wrapper[data-edit-form-item-wrapper-id="${itemId}"]`);
     cardItemWrapper.classList.add("hide-display");
     formWrapper.classList.add("show-display");

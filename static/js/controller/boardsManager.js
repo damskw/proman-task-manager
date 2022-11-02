@@ -68,7 +68,7 @@ async function addCard(clickEvent) {
 function revealEditBoardTitleForm(clickEvent) {
     const boardId = clickEvent.target.dataset.boardTitleId;
     const boardTitle = document.querySelector(`.board-name[data-board-title-id="${boardId}"]`);
-    const form = document.querySelector(`#edit-title-form[data-edit-board-name-id="${boardId}"]`);
+    const form = document.querySelector(`.edit-title-form[data-edit-board-name-id="${boardId}"]`);
     boardTitle.classList.add("hide-display");
     form.classList.add("show-display");
     form.addEventListener("submit", async function (e) {

@@ -4,6 +4,9 @@ export const htmlTemplates = {
     item: 3,
     deleteModal: 4,
     spinner: 5,
+    loginregister: 6,
+    login: 7,
+    register: 8,
 }
 
 export const builderFunctions = {
@@ -12,6 +15,9 @@ export const builderFunctions = {
     [htmlTemplates.item]: itemBuilder,
     [htmlTemplates.deleteModal]: deleteModalBuilder,
     [htmlTemplates.spinner]: spinnerBuilder,
+    [htmlTemplates.loginregister]: loginRegisterModalBuilder,
+    [htmlTemplates.login]: loginModalBuilder,
+    [htmlTemplates.register]: registerModalBuilder,
 };
 
 export function htmlFactory(template) {
@@ -31,11 +37,11 @@ function boardBuilder(board) {
                 <div class="board-header">
                     <div class="board-header-buttons">
                         <div class="board-name" data-board-title-id=${board.id}>${board.title}</div>
+                            <form class="hide-display edit-title-form" data-edit-board-name-id=${board.id}>
+                                <input type="text" name="board-title" placeholder="${board.title}" class="board-name board-name-edit">
+                                <input type="submit" class="page-button" value="Submit">
+                            </form>
                         <i class="fa-solid fa-trash" id="trash-icon-delete-board" data-board-delete-icon-id=${board.id}></i>
-                        <form class="hide-display" id="edit-title-form" data-edit-board-name-id=${board.id}>
-                            <input type="text" name="board-title" placeholder="${board.title}" class="board-name board-name-edit">
-                            <input type="submit" class="page-button" value="Submit">
-                        </form>
                     </div>
                     <hr>
                     <button class="page-button" data-new-card-board-id=${board.id}>Add new card</button>
@@ -57,7 +63,7 @@ function cardBuilder(card) {
                     </div>
                 </div>
                     <div class="edit-card-name-wrapper hide-display" data-edit-card-name-id=${card.id}>
-                        <form id="card-edit-form" data-form-edit-card-id="${card.id}">
+                        <form class="card-edit-form" data-form-edit-card-id="${card.id}">
                             <input type="text" name="card-title" placeholder="${card.title}" class="card-name card-name-edit">
                             <input type="submit" class="page-button" value="Submit">
                         </form>
@@ -82,9 +88,9 @@ function itemBuilder(item) {
                     </div>
                 </div>
                 <div class="edit-item-form-wrapper hide-display" data-edit-form-item-wrapper-id=${item.id}>
-                    <form id="edit-item-form" data-form-edit-item-id="${item.id}">
-                       <textarea name="item-name" id="edit-item-area">${item.title}</textarea>
-                       <input type="submit" id="submit-edit-item" class="page-button" value="Submit">
+                    <form class="edit-item-form" data-form-edit-item-id="${item.id}">
+                       <textarea name="item-name" class="edit-item-area">${item.title}</textarea>
+                       <input type="submit" class="page-button submit-edit-item" value="Submit">
                     </form>
                 </div>
             </div>`;
@@ -112,4 +118,54 @@ function spinnerBuilder() {
                      </div>
                  </div>
               `
+}
+
+
+function loginRegisterModalBuilder() {
+    return `
+        <div class="modal" id="modal-login-register">
+            <div class="modal-content" id="modal-content-login-register">
+                <span class="close" id="modal-close-button">&times;</span>
+
+            </div>
+         </div>`
+}
+
+function loginModalBuilder() {
+    return `    <form id="login-modal-form">
+                    <div class="inputs-wrapper">
+                        <div class="input-group">
+                            <input required="" type="email" name="e-mail" autocomplete="off" class="input">
+                            <label class="user-label">User E-mail</label>
+                        </div>
+                        <div class="input-group">
+                            <input required="" type="password" name="password" autocomplete="off" class="input">
+                            <label class="user-label">Password</label>
+                        </div>
+                        <input type="submit" class="page-button" value="Login">
+                        <p id="redirect-register">Don't have an account? Register here.</p>
+                        <p id="lost-password">Lost password? Click here.</p>
+                    </div>
+                </form>`
+}
+
+function registerModalBuilder() {
+    return `    <form id="register-modal-form">
+                    <div class="inputs-wrapper">
+                        <div class="input-group">
+                            <input required="" type="email" name="e-mail" autocomplete="off" class="input">
+                            <label class="user-label">User E-mail</label>
+                        </div>
+                        <div class="input-group">
+                            <input required="" type="password" name="password" autocomplete="off" class="input">
+                            <label class="user-label">Password</label>
+                        </div>
+                        <div class="input-group">
+                            <input required="" type="password" name="password" autocomplete="off" class="input">
+                            <label class="user-label">Repeat password</label>
+                        </div>
+                        <input type="submit" class="page-button" value="Register">
+                        <p id="redirect-login">Already have an account? Login here.</p>
+                    </div>
+                </form>`
 }

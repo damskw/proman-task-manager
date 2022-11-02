@@ -20,7 +20,14 @@ export let pageManager = {
         boardArrows.forEach(arrow => {
             arrow.addEventListener("click", toggleBoard);
         })
-    }, preLoadPage,
+    }, activateLoginButton: function () {
+        domManager.addEventListener(
+            "#login-register-li",
+            "click",
+            openLoginRegisterModal
+        )
+    },
+    preLoadPage,
     loadPageContent,
 }
 
@@ -50,4 +57,83 @@ function loadPageContent() {
     const spinner = document.querySelector(".spinner-position");
     spinner.remove();
     pageContent.style.display = "flex";
+}
+
+
+function openLoginRegisterModal() {
+    // if logged in then return? Or logout?
+    const modalBuilder = htmlFactory(htmlTemplates.loginregister);
+    const content = modalBuilder();
+    domManager.addChild(".main-page", content);
+    domManager.addEventListener(
+        "#modal-close-button",
+        "click",
+        closeModal
+    )
+    openLoginModal();
+}
+
+
+function openLoginModal() {
+    const loginBuilder = htmlFactory(htmlTemplates.login);
+    const content = loginBuilder();
+    domManager.addChild(".modal-content", content);
+    const form = document.querySelector("#login-modal-form");
+    form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const data = Object.fromEntries(new FormData(e.target).entries());
+        initLogin();
+        closeModal();
+    })
+    domManager.addEventListener(
+        "#redirect-register",
+        "click",
+        closeLoginModal)
+}
+
+function openRegisterModal() {
+    const registerBuilder = htmlFactory(htmlTemplates.register);
+    const content = registerBuilder();
+    domManager.addChild(".modal-content", content);
+    const form = document.querySelector("#register-modal-form");
+    form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const data = Object.fromEntries(new FormData(e.target).entries());
+        initRegister();
+        closeModal();
+    })
+    domManager.addEventListener(
+        "#redirect-login",
+        "click",
+        closeRegisterModal)
+}
+
+function initLogin() {
+
+}
+
+function initRegister() {
+
+}
+
+function closeModal() {
+    const modal = document.querySelector("#modal-login-register");
+    const modalInternal = document.querySelector(".modal-content");
+    modalInternal.classList.add("animate-closing-modal");
+    modalInternal.addEventListener("transitionend", (e) => {
+        modal.remove();
+    })
+
+}
+
+function closeLoginModal() {
+    const loginModal = document.querySelector("#login-modal-form");
+    loginModal.remove();
+    openRegisterModal();
+}
+
+function closeRegisterModal() {
+    const registerModal = document.querySelector("#register-modal-form");
+    registerModal.remove();
+    openLoginModal();
 }

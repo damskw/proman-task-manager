@@ -51,7 +51,7 @@ function revealEditCardNameForm(clickEvent) {
     const cardId = clickEvent.target.dataset.cardNameId;
     const cardHeaderWrapper = document.querySelector(`.card-header-wrapper[data-card-header-id="${cardId}"]`);
     const cardName = document.querySelector(`.card-name[data-card-name-id="${cardId}"]`)
-    const form = document.querySelector(`#card-edit-form[data-form-edit-card-id="${cardId}"]`);
+    const form = document.querySelector(`.card-edit-form[data-form-edit-card-id="${cardId}"]`);
     const formWrapper = document.querySelector(`.edit-card-name-wrapper[data-edit-card-name-id="${cardId}"]`);
     cardHeaderWrapper.classList.add("hide-display");
     formWrapper.classList.add("show-display");
