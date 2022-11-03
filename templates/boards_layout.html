@@ -1,4 +1,7 @@
 {% extends "layout.html" %}
+{% block scripts %}
+        <script type="module" src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+{% endblock %}
 {% block content %}
     {% if session %}
         <div class="new-board-wrapper">

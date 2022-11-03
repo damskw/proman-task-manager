@@ -14,7 +14,7 @@ export let pageManager = {
         domManager.addEventListener(
             "#new-board-button",
             "click",
-            boardsManager.createNewBoard
+            boardsManager.createNewPublicBoard
         );
     }, activateArrows: function () {
         const boardArrows = document.querySelectorAll(".board-name-arrow");

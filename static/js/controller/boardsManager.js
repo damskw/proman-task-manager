@@ -9,30 +9,41 @@ export let boardsManager = {
         const boards = await dataHandler.getBoards();
         const userId = parseInt(sessionStorage.getItem("userId"));
         for (let board of boards) {
-            if (userId === board.ownerid) {
+            if (userId === board.ownerid && board.type !== "private") {
                 const boardBuilder = htmlFactory(htmlTemplates.manageBoard);
                 const content = boardBuilder(board);
                 domManager.addChild("#root", content);
                 addBoardDefaultEventListeners(board.id);
                 await cardsManager.loadManageableCards(board.id);
-            } else {
+            } else if (userId !== board.ownerid && board.type !== "private") {
                 const boardBuilder = htmlFactory(htmlTemplates.publicBoard);
                 const content = boardBuilder(board);
                 domManager.addChild("#root", content);
                 await cardsManager.loadPublicCards(board.id);
             }
         }
-    }, createNewBoard: async function () {
+    }, createNewPublicBoard: async function () {
         const userId = parseInt(sessionStorage.getItem("userId"));
         const newBoardTitle = "New board";
-        const board = await dataHandler.createNewBoard(newBoardTitle, userId);
+        const board = await dataHandler.createNewBoard(newBoardTitle, userId, "public");
         const boardBuilder = htmlFactory(htmlTemplates.manageBoard);
         const content = boardBuilder(board);
         domManager.addChild("#root", content);
         addBoardDefaultEventListeners(board.id);
         await createDefaultCards(board.id);
         pageManager.activateArrows();
-    }
+
+    }, createNewPrivateBoard: async function () {
+        const userId = parseInt(sessionStorage.getItem("userId"));
+        const newBoardTitle = "New board";
+        const board = await dataHandler.createNewBoard(newBoardTitle, userId, "private");
+        const boardBuilder = htmlFactory(htmlTemplates.manageBoard);
+        const content = boardBuilder(board);
+        domManager.addChild("#root", content);
+        addBoardDefaultEventListeners(board.id);
+        await createDefaultCards(board.id);
+        pageManager.activateArrows();
+    },
 };
 
 async function createDefaultCards(boardId) {

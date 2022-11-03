@@ -87,15 +87,15 @@ def create_new_item(card_id, item_title, item_order):
     return matching_card
 
 
-def create_empty_board(board_title, user_id):
+def create_empty_board(board_title, user_id, type):
     matching_board = data_manager.execute_select(
         """
-        INSERT INTO boards(title, ownerid)
-        VALUES (%(board_title)s, %(user_id)s);
+        INSERT INTO boards(title, ownerid, type)
+        VALUES (%(board_title)s, %(user_id)s, %(type)s);
         SELECT * from boards
         WHERE boards.id = currval(pg_get_serial_sequence('boards', 'id'));
         """
-        , {"board_title": board_title, "user_id": user_id}, fetchall=False)
+        , {"board_title": board_title, "user_id": user_id, "type": type}, fetchall=False)
 
     return matching_board
 
