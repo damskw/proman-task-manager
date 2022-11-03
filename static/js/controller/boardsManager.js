@@ -7,17 +7,26 @@ import {pageManager} from "./pageManager.js";
 export let boardsManager = {
     loadBoards: async function () {
         const boards = await dataHandler.getBoards();
+        const userId = parseInt(sessionStorage.getItem("userId"));
         for (let board of boards) {
-            const boardBuilder = htmlFactory(htmlTemplates.board);
-            const content = boardBuilder(board);
-            domManager.addChild("#root", content);
-            addBoardDefaultEventListeners(board.id);
-            await cardsManager.loadCards(board.id);
+            if (userId === board.ownerid) {
+                const boardBuilder = htmlFactory(htmlTemplates.manageBoard);
+                const content = boardBuilder(board);
+                domManager.addChild("#root", content);
+                addBoardDefaultEventListeners(board.id);
+                await cardsManager.loadManageableCards(board.id);
+            } else {
+                const boardBuilder = htmlFactory(htmlTemplates.publicBoard);
+                const content = boardBuilder(board);
+                domManager.addChild("#root", content);
+                await cardsManager.loadPublicCards(board.id);
+            }
         }
     }, createNewBoard: async function () {
+        const userId = parseInt(sessionStorage.getItem("userId"));
         const newBoardTitle = "New board";
-        const board = await dataHandler.createNewBoard(newBoardTitle);
-        const boardBuilder = htmlFactory(htmlTemplates.board);
+        const board = await dataHandler.createNewBoard(newBoardTitle, userId);
+        const boardBuilder = htmlFactory(htmlTemplates.manageBoard);
         const content = boardBuilder(board);
         domManager.addChild("#root", content);
         addBoardDefaultEventListeners(board.id);
@@ -30,7 +39,7 @@ async function createDefaultCards(boardId) {
     const defaultCardTitles = ["New", "In Progress", "Testing", "Done"];
     for (const cardTitle of defaultCardTitles) {
         const card = await dataHandler.createEmptyCard(boardId, cardTitle);
-        const cardBuilder = htmlFactory(htmlTemplates.card);
+        const cardBuilder = htmlFactory(htmlTemplates.manageableCard);
         const content = cardBuilder(card);
         domManager.addChild(`.cards-container[data-board-cards-container-id="${boardId}"]`, content);
         cardsManager.addCardsDefaultEventListeners(card.id);
@@ -59,7 +68,7 @@ async function addCard(clickEvent) {
     const cardTitle = "new card";
     const boardId = clickEvent.target.dataset.newCardBoardId;
     const card = await dataHandler.createEmptyCard(boardId, cardTitle);
-    const cardBuilder = htmlFactory(htmlTemplates.card);
+    const cardBuilder = htmlFactory(htmlTemplates.manageableCard);
     const content = cardBuilder(card);
     domManager.addChild(`.cards-container[data-board-cards-container-id="${boardId}"]`, content);
     await cardsManager.addCardsDefaultEventListeners(card.id)

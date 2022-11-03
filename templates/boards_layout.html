@@ -1,8 +1,10 @@
 {% extends "layout.html" %}
 {% block content %}
-    <div class="new-board-wrapper">
-        <button class="page-button" id="new-board-button">Create new board</button>
-    </div>
+    {% if session %}
+        <div class="new-board-wrapper">
+            <button class="page-button" id="new-board-button">Create new board</button>
+        </div>
+    {% endif %}
     <div class="spinner-wrapper">
     </div>
     <div class="center-all-content">

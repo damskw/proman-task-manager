@@ -1,23 +1,6 @@
 import data_manager
 
 
-def get_card_status(status_id):
-    """
-    Find the first status matching the given id
-    :param status_id:
-    :return: str
-    """
-    status = data_manager.execute_select(
-        """
-        SELECT * FROM statuses s
-        WHERE s.id = %(status_id)s
-        ;
-        """
-        , {"status_id": status_id})
-
-    return status
-
-
 def get_boards():
     """
     Gather all boards
@@ -104,15 +87,15 @@ def create_new_item(card_id, item_title, item_order):
     return matching_card
 
 
-def create_empty_board(board_title):
+def create_empty_board(board_title, user_id):
     matching_board = data_manager.execute_select(
         """
-        INSERT INTO boards(title)
-        VALUES (%(board_title)s);
+        INSERT INTO boards(title, ownerid)
+        VALUES (%(board_title)s, %(user_id)s);
         SELECT * from boards
         WHERE boards.id = currval(pg_get_serial_sequence('boards', 'id'));
         """
-        , {"board_title": board_title}, fetchall=False)
+        , {"board_title": board_title, "user_id": user_id}, fetchall=False)
 
     return matching_board
 

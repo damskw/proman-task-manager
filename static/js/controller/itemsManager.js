@@ -3,22 +3,30 @@ import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
 
 export let itemsManager = {
-    loadItems: async function (cardId) {
+    loadManageableItems: async function (cardId) {
         const items = await dataHandler.getItemsByCardId(cardId);
         for (let item of items) {
-            const itemBuilder = htmlFactory(htmlTemplates.item);
+            const itemBuilder = htmlFactory(htmlTemplates.manageableItem);
             const content = itemBuilder(item);
             domManager.addChild(`.single-card-item-section[data-card-id-item-section="${cardId}"]`, content);
             addItemsDefaultEventListeners(item.id);
         }
-    }, addItemsDefaultEventListeners,
+    }, loadPublicItems: async function (cardId) {
+        const items = await dataHandler.getItemsByCardId(cardId);
+        for (let item of items) {
+            const itemBuilder = htmlFactory(htmlTemplates.publicItem);
+            const content = itemBuilder(item);
+            domManager.addChild(`.single-card-item-section[data-card-id-item-section="${cardId}"]`, content);
+        }
+    },
+    addItemsDefaultEventListeners,
 };
 
 
 function addItemsDefaultEventListeners(itemId) {
     domManager.addEventListener(
         `#delete-item-button[data-item-delete-button-id="${itemId}"]`,
-    "click",
+        "click",
         deleteItem
     );
     domManager.addEventListener(

@@ -60,7 +60,8 @@ def create_new_board():
     if request.method == "POST":
         data = request.get_json()
         board_title = data["boardTitle"]
-        return queries.create_empty_board(board_title)
+        user_id = data["userId"]
+        return queries.create_empty_board(board_title, user_id)
 
 
 @app.route("/api/boards/<int:board_id>/delete/", methods=["POST"])

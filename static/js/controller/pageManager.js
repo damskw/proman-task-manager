@@ -60,6 +60,7 @@ function preLoadPage() {
 
 async function logout() {
     await dataHandler.logoutUser();
+    sessionStorage.clear();
     window.location.href = '/';
 }
 
@@ -93,7 +94,7 @@ function openLoginModal() {
     form.addEventListener("submit", async function (e) {
         e.preventDefault();
         const data = Object.fromEntries(new FormData(e.target).entries());
-        initLogin(data);
+        await initLogin(data);
     })
     domManager.addEventListener(
         "#redirect-register",
@@ -129,6 +130,7 @@ async function initLogin(data) {
         return
     }
     closeModal()
+    sessionStorage.setItem("userId", user.id);
     window.location.href = '/';
 }
 

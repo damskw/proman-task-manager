@@ -4,13 +4,22 @@ import {domManager} from "../view/domManager.js";
 import {itemsManager} from "./itemsManager.js";
 
 export let cardsManager = {
-    loadCards: async function (boardId) {
+    loadPublicCards: async function (boardId) {
         const cards = await dataHandler.getCardsByBoardId(boardId);
         for (let card of cards) {
-            const cardBuilder = htmlFactory(htmlTemplates.card);
+            const cardBuilder = htmlFactory(htmlTemplates.publicCard);
             const content = cardBuilder(card);
             domManager.addChild(`.cards-container[data-board-cards-container-id="${boardId}"]`, content);
-            await itemsManager.loadItems(card.id);
+            await itemsManager.loadPublicItems(card.id);
+        }
+    },
+    loadManageableCards: async function (boardId) {
+        const cards = await dataHandler.getCardsByBoardId(boardId);
+        for (let card of cards) {
+            const cardBuilder = htmlFactory(htmlTemplates.manageableCard);
+            const content = cardBuilder(card);
+            domManager.addChild(`.cards-container[data-board-cards-container-id="${boardId}"]`, content);
+            await itemsManager.loadManageableItems(card.id);
             addCardsDefaultEventListeners(card.id);
         }
     },
@@ -40,7 +49,7 @@ async function addItem(clickEvent) {
     const cardId = clickEvent.target.dataset.addItemButtonCardId;
     const items = await dataHandler.createNewItem(cardId);
     items.forEach(item => {
-        const itemBuilder = htmlFactory(htmlTemplates.item);
+        const itemBuilder = htmlFactory(htmlTemplates.manageableItem);
         const content = itemBuilder(item);
         domManager.addChild(`.single-card-item-section[data-card-id-item-section="${cardId}"]`, content);
         itemsManager.addItemsDefaultEventListeners(item.id)
