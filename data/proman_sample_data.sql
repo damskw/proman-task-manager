@@ -17,9 +17,10 @@ SET default_with_oids = false;
 --- drop tables
 ---
 
-DROP TABLE IF EXISTS boards CASCADE;
-DROP TABLE IF EXISTS cards;
 DROP TABLE IF EXISTS items;
+DROP TABLE IF EXISTS cards;
+DROP TABLE IF EXISTS boards CASCADE;
+DROP TABLE IF EXISTS users;
 
 ---
 --- create tables
@@ -27,7 +28,9 @@ DROP TABLE IF EXISTS items;
 
 CREATE TABLE boards (
     id          SERIAL PRIMARY KEY  NOT NULL,
-    title       VARCHAR(200)        NOT NULL
+    title       VARCHAR(200)        NOT NULL,
+    type        VARCHAR(200)                , --- PUBLIC OR PRIVATE
+    ownerId    INTEGER
 );
 
 CREATE TABLE cards (
@@ -43,6 +46,14 @@ CREATE TABLE items
     card_id     INTEGER             NOT NULL,
     title       VARCHAR (200)       NOT NULL,
     item_order  INTEGER             NOT NULL
+);
+
+CREATE TABLE users
+(
+    id          SERIAL PRIMARY KEY  NOT NULL,
+    email       VARCHAR(254)        NOT NULL,
+    password    text                NOT NULL,
+    name        VARCHAR(200)
 );
 
 ---

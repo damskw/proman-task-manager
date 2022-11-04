@@ -3,7 +3,7 @@ import {pageManager} from "./controller/pageManager.js";
 
 async function init() {
     pageManager.preLoadPage()
-    await boardsManager.loadBoards();
+    await boardsManager.loadPrivateBoards();
     pageManager.loadPageContent()
     pageManager.activateNavBar();
     pageManager.activateNewBoardButton();

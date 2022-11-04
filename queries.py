@@ -1,23 +1,6 @@
 import data_manager
 
 
-def get_card_status(status_id):
-    """
-    Find the first status matching the given id
-    :param status_id:
-    :return: str
-    """
-    status = data_manager.execute_select(
-        """
-        SELECT * FROM statuses s
-        WHERE s.id = %(status_id)s
-        ;
-        """
-        , {"status_id": status_id})
-
-    return status
-
-
 def get_boards():
     """
     Gather all boards
@@ -29,9 +12,24 @@ def get_boards():
     return data_manager.execute_select(
         """
         SELECT * FROM boards
+        ORDER BY boards.id
         ;
         """
     )
+
+
+def get_user_boards(user_id):
+    """
+    Gather boards for user
+    """
+    return data_manager.execute_select(
+        """
+        SELECT * FROM boards
+        WHERE boards.ownerid = %(user_id)s
+        ORDER BY boards.id
+        ;
+        """
+        , {"user_id": user_id})
 
 
 def get_cards_for_board(board_id):
@@ -42,6 +40,7 @@ def get_cards_for_board(board_id):
         """
         SELECT * FROM cards
         WHERE cards.board_id = %(board_id)s
+        ORDER BY cards.card_order
         ;
         """
         , {"board_id": board_id})
@@ -57,7 +56,7 @@ def get_items_for_card(card_id):
         """
         SELECT * FROM items
         WHERE items.card_id = %(card_id)s
-        ;
+        ORDER BY items.item_order;
         """
         , {"card_id": card_id})
 
@@ -102,15 +101,15 @@ def create_new_item(card_id, item_title, item_order):
     return matching_card
 
 
-def create_empty_board(board_title):
+def create_empty_board(board_title, user_id, type):
     matching_board = data_manager.execute_select(
         """
-        INSERT INTO boards(title)
-        VALUES (%(board_title)s);
+        INSERT INTO boards(title, ownerid, type)
+        VALUES (%(board_title)s, %(user_id)s, %(type)s);
         SELECT * from boards
         WHERE boards.id = currval(pg_get_serial_sequence('boards', 'id'));
         """
-        , {"board_title": board_title}, fetchall=False)
+        , {"board_title": board_title, "user_id": user_id, "type": type}, fetchall=False)
 
     return matching_board
 
@@ -137,3 +136,69 @@ def update_card_name(card_id, card_name):
         WHERE cards.id = %(card_id)s;
         """
         , {"card_id": card_id, "card_name": card_name})
+
+
+def update_item_name(item_id, item_name):
+    data_manager.execute_insert(
+        """
+        UPDATE items
+        SET title = %(item_name)s
+        WHERE items.id = %(item_id)s;
+        """
+        , {"item_id": item_id, "item_name": item_name})
+
+
+def delete_board(board_id):
+    data_manager.execute_insert(
+        """
+        DELETE FROM items
+        WHERE card_id IN (SELECT id FROM cards
+                          WHERE board_id = %(board_id)s);
+                          
+        DELETE FROM cards
+        WHERE board_id = %(board_id)s;
+        
+        DELETE FROM boards
+        WHERE id = %(board_id)s;
+        """
+        , {"board_id": board_id})
+
+
+def delete_item(item_id):
+    data_manager.execute_insert(
+        """
+        DELETE FROM items
+        WHERE id = %(item_id)s;
+        """
+        , {"item_id": item_id})
+
+
+def delete_card(card_id):
+    data_manager.execute_insert(
+        """
+        DELETE FROM items
+        WHERE card_id = %(card_id)s;
+
+        DELETE FROM cards
+        WHERE id = %(card_id)s;
+        """
+        , {"card_id": card_id})
+
+
+def register_user(email, hashed_password, name):
+    data_manager.execute_insert(
+        """
+        INSERT INTO users(email, password, name)
+        VALUES (%(email)s, %(hashed_password)s, %(name)s);
+        """
+        , {"email": email, "hashed_password": hashed_password, "name": name})
+
+
+def check_user_existence(email):
+    matching_user = data_manager.execute_select(
+        """
+        SELECT * from users
+        WHERE email = %(email)s;
+        """
+        , {"email": email}, fetchall=False)
+    return matching_user
