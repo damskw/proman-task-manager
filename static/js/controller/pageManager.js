@@ -28,6 +28,11 @@ export let pageManager = {
             openLoginRegisterModal
         )
         domManager.addEventListener(
+            "#login-register-p",
+            "click",
+            openLoginRegisterModal
+        )
+        domManager.addEventListener(
             "#logout-li",
             "click",
             logout
@@ -126,7 +131,7 @@ function openRegisterModal() {
 async function initLogin(data) {
     const user = await dataHandler.loginUser(data["email"], data["password"]);
     if (!user["email"]) {
-        sendLoginErrorNotification("Error: User with that email not found. Do you want to register?");
+        sendLoginErrorNotification("Error: User with that email not found.<br>Do you want to register?");
         return
     }
     if (!user["password"]) {
@@ -154,13 +159,13 @@ async function initRegister(data) {
 function sendRegisterErrorNotification(notification) {
     const registerNotification = document.querySelector("#register-notification");
     registerNotification.style.display = "block";
-    registerNotification.innerText = notification;
+    registerNotification.innerHTML = notification;
 }
 
 function sendLoginErrorNotification(notification) {
     const loginNotification = document.querySelector("#login-notification");
     loginNotification.style.display = "block";
-    loginNotification.innerText = notification;
+    loginNotification.innerHTML = notification;
 }
 
 function closeModal() {

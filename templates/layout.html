@@ -41,7 +41,7 @@
                         <h3>{{ session.name }}</h3>
                     </div>
                     <hr>
-                    <a href="#" class="sub-menu-link">
+                    <a href="/user/{{ session.id }}/boards" class="sub-menu-link">
                         <img src="{{ url_for('static', filename='images/profile/settings.png') }}">
                         <p id="my-boards-p">My boards</p>
                         <span>></span>
@@ -66,7 +66,7 @@
                     <hr>
                     <a href="#" class="sub-menu-link">
                         <img src="{{ url_for('static', filename='images/profile/help.png') }}">
-                        <p>Help & Privacy</p>
+                        <p id="login-register-p">Login / register</p>
                         <span>></span>
                     </a>
                 </div>
