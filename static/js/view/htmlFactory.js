@@ -43,6 +43,7 @@ function publicBoardBuilder(board) {
                 <div class="board-header">
                     <div class="board-header-buttons">
                         <div class="board-name" data-board-title-id=${board.id}>${board.title}</div>
+                        <div class="board-type">${board.type}</div>
                     </div>
                     <hr>
                      <i class="fa-sharp fa-solid fa-arrow-up board-name-arrow" data-arrow-board-id=${board.id}></i>
@@ -63,6 +64,7 @@ function manageableBoardBuilder(board) {
                                 <input type="text" name="board-title" placeholder="${board.title}" class="board-name board-name-edit">
                                 <input type="submit" class="page-button" value="Submit">
                             </form>
+                         <div class="board-type">${board.type}</div>
                          <i class="fa-solid fa-trash" id="trash-icon-delete-board" data-board-delete-icon-id=${board.id}></i>
                     </div>
                     <hr>
@@ -108,6 +110,7 @@ function publicCardBuilder(card) {
                     <div class="card-header">
                         <div class="card-name" data-card-name-id="${card.id}">${card.title}</div>
                     </div>
+                    
                 </div>
                 <div class="single-card-item-section" data-card-id-item-section="${card.id}">
                 

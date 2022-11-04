@@ -409,7 +409,6 @@ nav ul li a {
 }
 
 
-
 .close {
     color: #aaaaaa;
     float: right;
@@ -645,4 +644,15 @@ nav ul li a {
 
 #user-profile-icon:hover {
     cursor: pointer;
+}
+
+.board-type {
+    border: 2px solid purple;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 1em;
+    padding-right: 1em;
+    border-radius: 2em;
+    font-weight: bold;
 }
