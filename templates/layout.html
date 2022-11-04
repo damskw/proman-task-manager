@@ -29,38 +29,49 @@
             {% if not session %}
                 <li id="login-register-li">Login / Register</li>
             {% else %}
+                <li><a href="/user/{{ session.id }}/boards">My boards</a></li>
                 <li id="logout-li">Logout</li>
             {% endif %}
         </ul>
         <i class="fa-solid fa-user" id="user-profile-icon"></i>
         <div class="sub-menu-wrap" id="subMenu">
-            <div class="sub-menu">
-                <div class="user-info">
-                    <img src="{{ url_for('static', filename='images/profile/user.png') }}">
-                    <h3>Daenerys Targaryen</h3>
+            {% if session %}
+                <div class="sub-menu">
+                    <div class="user-info">
+                        <img src="{{ url_for('static', filename='images/profile/guest-user.jpg') }}">
+                        <h3>{{ session.name }}</h3>
+                    </div>
+                    <hr>
+                    <a href="#" class="sub-menu-link">
+                        <img src="{{ url_for('static', filename='images/profile/settings.png') }}">
+                        <p id="my-boards-p">My boards</p>
+                        <span>></span>
+                    </a>
+                    <a href="#" class="sub-menu-link">
+                        <img src="{{ url_for('static', filename='images/profile/help.png') }}">
+                        <p>Help & Privacy</p>
+                        <span>></span>
+                    </a>
+                    <a href="#" class="sub-menu-link">
+                        <img src="{{ url_for('static', filename='images/profile/logout.png') }}">
+                        <p id="logout-p">Logout</p>
+                        <span>></span>
+                    </a>
                 </div>
-                <hr>
-                <a href="#" class="sub-menu-link">
-                    <img src="{{ url_for('static', filename='images/profile/profile.png') }}">
-                    <p>View your profile</p>
-                    <span>></span>
-                </a>
-                <a href="#" class="sub-menu-link">
-                    <img src="{{ url_for('static', filename='images/profile/settings.png') }}">
-                    <p>Profile settings</p>
-                    <span>></span>
-                </a>
-                <a href="#" class="sub-menu-link">
-                    <img src="{{ url_for('static', filename='images/profile/help.png') }}">
-                    <p>Help & Privacy</p>
-                    <span>></span>
-                </a>
-                <a href="#" class="sub-menu-link">
-                    <img src="{{ url_for('static', filename='images/profile/logout.png') }}">
-                    <p>Logout</p>
-                    <span>></span>
-                </a>
-            </div>
+            {% else %}
+                <div class="sub-menu">
+                    <div class="user-info">
+                        <img src="{{ url_for('static', filename='images/profile/guest-user.jpg') }}">
+                        <h3>Login to see your profile</h3>
+                    </div>
+                    <hr>
+                    <a href="#" class="sub-menu-link">
+                        <img src="{{ url_for('static', filename='images/profile/help.png') }}">
+                        <p>Help & Privacy</p>
+                        <span>></span>
+                    </a>
+                </div>
+            {% endif %}
         </div>
     </nav>
     {% block content %}{% endblock %}

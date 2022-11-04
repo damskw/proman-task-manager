@@ -22,27 +22,32 @@ export let boardsManager = {
                 await cardsManager.loadPublicCards(board.id);
             }
         }
-    }, createNewPublicBoard: async function () {
+    }, loadPrivateBoards: async function () {
+        const userId = parseInt(sessionStorage.getItem("userId"));
+        const boards = await dataHandler.getUserBoards(userId);
+        if (boards) {
+            for (let board of boards) {
+                const boardBuilder = htmlFactory(htmlTemplates.manageBoard);
+                const content = boardBuilder(board);
+                domManager.addChild("#root", content);
+                addBoardDefaultEventListeners(board.id);
+                await cardsManager.loadManageableCards(board.id);
+            }
+        }
+    }, createNewBoard: async function (clickEvent) {
+        const boardType = clickEvent.target.dataset.boardType;
         const userId = parseInt(sessionStorage.getItem("userId"));
         const newBoardTitle = "New board";
-        const board = await dataHandler.createNewBoard(newBoardTitle, userId, "public");
+        const board = await dataHandler.createNewBoard(newBoardTitle, userId, boardType);
         const boardBuilder = htmlFactory(htmlTemplates.manageBoard);
         const content = boardBuilder(board);
+        pageManager.preLoadPage();
         domManager.addChild("#root", content);
+        setTimeout(pageManager.loadPageContent, 1000);
         addBoardDefaultEventListeners(board.id);
         await createDefaultCards(board.id);
         pageManager.activateArrows();
 
-    }, createNewPrivateBoard: async function () {
-        const userId = parseInt(sessionStorage.getItem("userId"));
-        const newBoardTitle = "New board";
-        const board = await dataHandler.createNewBoard(newBoardTitle, userId, "private");
-        const boardBuilder = htmlFactory(htmlTemplates.manageBoard);
-        const content = boardBuilder(board);
-        domManager.addChild("#root", content);
-        addBoardDefaultEventListeners(board.id);
-        await createDefaultCards(board.id);
-        pageManager.activateArrows();
     },
 };
 

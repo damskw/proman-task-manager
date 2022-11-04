@@ -2,17 +2,14 @@ export let dataHandler = {
     getBoards: async function () {
         return await apiGet("/api/boards");
     },
-    getBoard: async function (boardId) {
-        // the board is retrieved and then the callback function is called with the board
+    getUserBoards: async function (userId) {
+        return await apiGet(`/api/user/${userId}/boards`);
     },
     getCardsByBoardId: async function (boardId) {
         return await apiGet(`/api/boards/${boardId}/cards/`);
     },
     getItemsByCardId: async function (cardId) {
         return await apiGet(`/api/cards/${cardId}/items/`);
-    },
-    getCard: async function (cardId) {
-        // the card is retrieved and then the callback function is called with the card
     },
     createNewBoard: async function (boardTitle, userId, type) {
         // creates new board, saves it and calls the callback function with its data

@@ -14,7 +14,7 @@ export let pageManager = {
         domManager.addEventListener(
             "#new-board-button",
             "click",
-            boardsManager.createNewPublicBoard
+            boardsManager.createNewBoard
         );
     }, activateArrows: function () {
         const boardArrows = document.querySelectorAll(".board-name-arrow");
@@ -22,13 +22,18 @@ export let pageManager = {
             arrow.addEventListener("click", toggleBoard);
         })
     }, activateLoginLogoutButtons: function () {
-        domManager.addEventListenerIfExists(
+        domManager.addEventListener(
             "#login-register-li",
             "click",
             openLoginRegisterModal
         )
-        domManager.addEventListenerIfExists(
+        domManager.addEventListener(
             "#logout-li",
+            "click",
+            logout
+        )
+        domManager.addEventListener(
+            "#logout-p",
             "click",
             logout
         )
@@ -73,7 +78,6 @@ function loadPageContent() {
 
 
 function openLoginRegisterModal() {
-    // if logged in then return? Or logout?
     const modalBuilder = htmlFactory(htmlTemplates.loginregister);
     const content = modalBuilder();
     domManager.addChild(".main-page", content);

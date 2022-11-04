@@ -14,20 +14,9 @@ app.secret_key = os.environ.get('APP_KEY')
 load_dotenv()
 
 
-# @app.route("/")
-# def index():
-#     """
-#     This is a one-pager which shows all the boards and cards
-#     """
-#     return render_template('index.html')
-
-
 @app.route("/boards")
 @app.route("/")
 def boards():
-    """
-    For testing purposes only
-    """
     return render_template("boards_layout.html")
 
 
@@ -38,6 +27,22 @@ def get_boards():
     All the boards
     """
     return queries.get_boards()
+
+
+@app.route("/api/user/<user_id>/boards")
+@json_response
+def get_user_boards(user_id):
+    """
+    All the boards for user
+    """
+    return queries.get_user_boards(user_id)
+
+
+@app.route("/user/<user_id>/boards")
+def user_boards(user_id):
+    if session and session["id"] == int(user_id):
+        return render_template("private_boards.html")
+    return redirect("/")
 
 
 @app.route("/api/boards/<int:board_id>/cards/")
@@ -206,6 +211,7 @@ def login():
         return {"email": None}
     if not verify_password(data["password"], user["password"]):
         return {"email": data["email"], "password": None}
+    session["id"] = user["id"]
     session["email"] = user["email"]
     session["name"] = user["name"]
     return user
@@ -213,6 +219,7 @@ def login():
 
 @app.route("/api/logout/", methods=["post"])
 def logout():
+    session.pop("id", None)
     session.pop("email", None)
     session.pop("name", None)
     return render_template("index.html")

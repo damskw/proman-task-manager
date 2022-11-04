@@ -1,11 +1,11 @@
 {% extends "layout.html" %}
 {% block scripts %}
-        <script type="module" src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+        <script type="module" src="{{ url_for('static', filename='js/private.js') }}" defer></script>
 {% endblock %}
 {% block content %}
     {% if session %}
         <div class="new-board-wrapper">
-            <button class="page-button" id="new-board-button" data-board-type="public">Create new board</button>
+            <button class="page-button" id="new-board-button" data-board-type="private">Create new private board</button>
         </div>
     {% endif %}
     <div class="spinner-wrapper">

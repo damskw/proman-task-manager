@@ -18,6 +18,20 @@ def get_boards():
     )
 
 
+def get_user_boards(user_id):
+    """
+    Gather boards for user
+    """
+    return data_manager.execute_select(
+        """
+        SELECT * FROM boards
+        WHERE boards.ownerid = %(user_id)s
+        ORDER BY boards.id
+        ;
+        """
+        , {"user_id": user_id})
+
+
 def get_cards_for_board(board_id):
     # # remove this code once you implement the database
     # return [{"title": "title1", "id": 1}, {"title": "board2", "id": 2}]

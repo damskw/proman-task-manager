@@ -642,3 +642,7 @@ nav ul li a {
     display: none;
     color: red;
 }
+
+#user-profile-icon:hover {
+    cursor: pointer;
+}
