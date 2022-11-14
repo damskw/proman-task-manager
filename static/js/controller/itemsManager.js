@@ -1,6 +1,7 @@
 import {dataHandler} from "../data/dataHandler.js";
 import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
+import {dragDropManager} from "./dragDropManager.js";
 
 export let itemsManager = {
     loadManageableItems: async function (cardId) {
@@ -10,6 +11,7 @@ export let itemsManager = {
             const content = itemBuilder(item);
             domManager.addChild(`.single-card-item-section[data-card-id-item-section="${cardId}"]`, content);
             addItemsDefaultEventListeners(item.id);
+            dragDropManager.initDraggable(item);
         }
     }, loadPublicItems: async function (cardId) {
         const items = await dataHandler.getItemsByCardId(cardId);

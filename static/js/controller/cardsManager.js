@@ -2,6 +2,7 @@ import {dataHandler} from "../data/dataHandler.js";
 import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
 import {itemsManager} from "./itemsManager.js";
+import {dragDropManager} from "./dragDropManager.js";
 
 export let cardsManager = {
     loadPublicCards: async function (boardId) {
@@ -21,6 +22,8 @@ export let cardsManager = {
             domManager.addChild(`.cards-container[data-board-cards-container-id="${boardId}"]`, content);
             await itemsManager.loadManageableItems(card.id);
             addCardsDefaultEventListeners(card.id);
+            // dragDropManager.initDraggable(card);
+            dragDropManager.initDropZone(card);
         }
     },
     addItem,
@@ -52,7 +55,8 @@ async function addItem(clickEvent) {
         const itemBuilder = htmlFactory(htmlTemplates.manageableItem);
         const content = itemBuilder(item);
         domManager.addChild(`.single-card-item-section[data-card-id-item-section="${cardId}"]`, content);
-        itemsManager.addItemsDefaultEventListeners(item.id)
+        itemsManager.addItemsDefaultEventListeners(item.id);
+        dragDropManager.initDraggable(item);
     })
 }
 

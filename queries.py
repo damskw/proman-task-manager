@@ -6,8 +6,6 @@ def get_boards():
     Gather all boards
     :return:
     """
-    # # remove this code once you implement the database
-    # return [{"title": "board1", "id": 1}, {"title": "board2", "id": 2}]
 
     return data_manager.execute_select(
         """
@@ -33,9 +31,6 @@ def get_user_boards(user_id):
 
 
 def get_cards_for_board(board_id):
-    # # remove this code once you implement the database
-    # return [{"title": "title1", "id": 1}, {"title": "board2", "id": 2}]
-
     matching_cards = data_manager.execute_select(
         """
         SELECT * FROM cards
@@ -49,9 +44,6 @@ def get_cards_for_board(board_id):
 
 
 def get_items_for_card(card_id):
-    # # remove this code once you implement the database
-    # return [{"title": "title1", "id": 1}, {"title": "board2", "id": 2}]
-
     matching_items = data_manager.execute_select(
         """
         SELECT * FROM items
@@ -99,6 +91,16 @@ def create_new_item(card_id, item_title, item_order):
         , {"item_order": item_order, "card_id": card_id})
 
     return matching_card
+
+
+def move_item(new_card_id, item_id, item_order):
+    data_manager.execute_insert(
+        """
+        UPDATE items
+        SET card_id = %(new_card_id)s, item_order = %(item_order)s
+        WHERE items.id = %(item_id)s
+        """
+        , {"new_card_id": new_card_id, "item_id": item_id, "item_order": item_order})
 
 
 def create_empty_board(board_title, user_id, type):

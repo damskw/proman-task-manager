@@ -45,6 +45,11 @@ def user_boards(user_id):
     return redirect("/")
 
 
+@app.route("/static/<path>")
+def static_redirect():
+    return redirect("/")
+
+
 @app.route("/api/boards/<int:board_id>/cards/")
 @json_response
 def get_cards_for_board(board_id: int):
@@ -139,6 +144,16 @@ def update_item_name(item_id: int):
         return redirect('/boards')
 
 
+@app.route("/api/items/<int:item_id>/move/", methods=["POST"])
+def move_item(item_id: int):
+    """
+    Moves item to a different card
+    """
+    data = request.get_json()
+    queries.move_item(data["newCardId"], item_id, data["itemOrder"])
+    return redirect('/')
+
+
 @app.route("/api/boards/<int:board_id>/cards/", methods=["POST"])
 @json_response
 def add_empty_card(board_id: int):
@@ -164,7 +179,7 @@ def add_empty_item(card_id: int):
         data = request.get_json()
         item_title = data["itemTitle"]
         item_order = data["itemOrder"]
-        return queries.create_new_item(card_id, item_title, item_order)
+        return queries.create_new_item(card_id, data["itemTitle"], item_order)
 
 
 @app.route("/api/cards/<int:card_id>/items/")

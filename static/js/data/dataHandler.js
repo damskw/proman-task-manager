@@ -28,6 +28,12 @@ export let dataHandler = {
         const data = {itemTitle: "new item", cardId: cardId, itemOrder: items.length + 1};
         return await apiPost(`/api/cards/${cardId}/items/`, data)
     },
+    moveItem: async function (newCardId, itemId) {
+        // moves item to a new card
+        const items = await this.getItemsByCardId(newCardId);
+        const data = {newCardId: newCardId, itemOrder: items.length + 1};
+        await apiPut(`/api/items/${itemId}/move/`, data);
+    },
     changeBoardTitle: async function (boardId, boardTitle) {
         // changes title of a board
         const data = {boardTitle: boardTitle, boardId: boardId};
