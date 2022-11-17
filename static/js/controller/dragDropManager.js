@@ -6,15 +6,14 @@ export let dragDropManager = {
     initDraggable: function (object) {
         const item = "item_order" in object ? document.querySelector(`.card-item[data-item-id="${object["id"]}"]`) : document.querySelector(`.single-card[data-card-id="${object["id"]}"]`);
         item.setAttribute("draggable", true);
-        item.addEventListener("dragstart", handleDragStart);
-        item.addEventListener("dragend", handleDragEnd);
+        item.addEventListener("dragstart", itemDragAndDropHandler.handleItemDragStart);
+        item.addEventListener("dragend", itemDragAndDropHandler.handleItemDragEnd);
     },
     initDropZone: function (object) {
         const element = "card_order" in object ? document.querySelector(`.single-card[data-card-id="${object["id"]}"]`) : document.querySelector(`.single-card[data-card-id="${object["id"]}"]`)
-        element.addEventListener("dragenter", handleDragEnter);
-        element.addEventListener("dragover", handleDragOver);
-        element.addEventListener("dragleave", handleDragLeave);
-        element.addEventListener("drop", handleDrop);
+        element.addEventListener("dragover", itemDragAndDropHandler.handleCardDragOver);
+        element.addEventListener("dragleave", itemDragAndDropHandler.handleCardDragLeave);
+        element.addEventListener("drop", itemDragAndDropHandler.handleItemDrop);
     },
 }
 
@@ -25,12 +24,58 @@ export const pageEnvironment = {
     draggedFromId: null,
 }
 
-function handleDragStart(e) {
-    pageEnvironment.dragged = e.currentTarget;
-    pageEnvironment.draggedId = e.currentTarget.dataset.itemId
-    pageEnvironment.draggedFrom = e.currentTarget.parentNode;
-    pageEnvironment.draggedFromId = e.currentTarget.parentNode.dataset.cardIdItemSection;
-    changeDragStartStyles(e.currentTarget);
+const itemDragAndDropHandler = {
+    handleItemDragStart: function (e) {
+        pageEnvironment.dragged = e.currentTarget;
+        pageEnvironment.draggedId = e.currentTarget.dataset.itemId
+        pageEnvironment.draggedFrom = e.currentTarget.parentNode;
+        pageEnvironment.draggedFromId = e.currentTarget.parentNode.dataset.cardIdItemSection;
+        itemDragAndDropHandler.changeItemDragStartStyles(e.currentTarget);
+    },
+    handleItemDragEnd: function (e) {
+        itemDragAndDropHandler.changeItemDragEndStyles(pageEnvironment.dragged);
+        clearPageEnvironment();
+    },
+    changeItemDragStartStyles: function (element) {
+        element.classList.add("item-drag-start");
+    },
+    changeItemDragEndStyles: function (element) {
+        element.classList.remove("item-drag-start");
+    },
+    changeCardDragOverStyles: function (element) {
+        element.classList.add("card-drag-over");
+    },
+    changeCardDragLeaveStyles: function (element) {
+        element.classList.remove("card-drag-over");
+    },
+    handleCardDragOver: function (e) {
+        e.preventDefault();
+        itemDragAndDropHandler.changeCardDragOverStyles(e.currentTarget);
+    },
+    handleCardDragLeave: function (e) {
+        itemDragAndDropHandler.changeCardDragLeaveStyles(e.currentTarget);
+    },
+    resetItemAttributes: function (itemId) {
+        const item = document.querySelector(`.card-item[data-item-id="${itemId}"]`)
+        itemsManager.addItemsDefaultEventListeners(itemId);
+        item.setAttribute("draggable", true);
+        item.addEventListener("dragstart", itemDragAndDropHandler.handleItemDragStart);
+        item.addEventListener("dragend", itemDragAndDropHandler.handleItemDragEnd);
+    },
+    handleItemDrop: async function (e) {
+        e.preventDefault();
+        const dropZoneId = e.currentTarget.dataset.cardId;
+        if (dropZoneId === pageEnvironment.draggedFromId) {
+            itemDragAndDropHandler.changeCardDragLeaveStyles(e.currentTarget);
+            return;
+        }
+        itemDragAndDropHandler.changeItemDragEndStyles(pageEnvironment.dragged);
+        domManager.addChild(`.single-card-item-section[data-card-id-item-section="${dropZoneId}"]`, pageEnvironment.dragged.outerHTML);
+        pageEnvironment.draggedFrom.removeChild(pageEnvironment.dragged);
+        itemDragAndDropHandler.resetItemAttributes(pageEnvironment.draggedId);
+        itemDragAndDropHandler.changeCardDragLeaveStyles(e.currentTarget);
+        await dataHandler.moveItem(dropZoneId, pageEnvironment.draggedId);
+    }
 
 }
 
@@ -39,62 +84,4 @@ function clearPageEnvironment() {
     pageEnvironment.draggedFrom = null;
     pageEnvironment.draggedId = null;
     pageEnvironment.draggedFromId = null;
-}
-
-function changeDragStartStyles(element) {
-    element.classList.add("item-drag-start");
-}
-
-function changeDragEndStyles(element) {
-    element.classList.remove("item-drag-start");
-}
-
-function changeDragOverStyles(element) {
-    element.classList.add("card-drag-over");
-}
-
-function changeDragLeaveStyles(element) {
-    element.classList.remove("card-drag-over");
-}
-
-
-function handleDragEnd(e) {
-    changeDragEndStyles(pageEnvironment.dragged);
-    clearPageEnvironment();
-}
-
-function handleDragEnter(e) {
-
-}
-
-function handleDragOver(e) {
-    e.preventDefault();
-    changeDragOverStyles(e.currentTarget);
-}
-
-function handleDragLeave(e) {
-    changeDragLeaveStyles(e.currentTarget);
-}
-
-function resetAttributes(itemId) {
-    const item = document.querySelector(`.card-item[data-item-id="${itemId}"]`)
-    item.setAttribute("draggable", true);
-    item.addEventListener("dragstart", handleDragStart);
-    item.addEventListener("dragend", handleDragEnd);
-}
-
-async function handleDrop(e) {
-    e.preventDefault();
-    const dropZoneId = e.currentTarget.dataset.cardId;
-    if (dropZoneId === pageEnvironment.draggedFromId) {
-        changeDragLeaveStyles(e.currentTarget);
-        return;
-    }
-    changeDragEndStyles(pageEnvironment.dragged);
-    domManager.addChild(`.single-card-item-section[data-card-id-item-section="${dropZoneId}"]`, pageEnvironment.dragged.outerHTML);
-    pageEnvironment.draggedFrom.removeChild(pageEnvironment.dragged);
-    itemsManager.addItemsDefaultEventListeners(pageEnvironment.draggedId);
-    resetAttributes(pageEnvironment.draggedId);
-    changeDragLeaveStyles(e.currentTarget);
-    await dataHandler.moveItem(dropZoneId, pageEnvironment.draggedId);
 }
