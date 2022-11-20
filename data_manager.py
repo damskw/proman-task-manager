@@ -31,14 +31,11 @@ def get_connection_data(db_name=None):
     with :MY__PSQL_: prefix
     :db_name: optional parameter. By default it uses the environment variable value.
     """
-    if db_name is None:
-        db_name = os.getenv('MY_PSQL_DBNAME')
-
     return {
-        'dbname': db_name,
-        'user': os.getenv('MY_PSQL_USER'),
-        'host': os.getenv('MY_PSQL_HOST'),
-        'password': os.getenv('MY_PSQL_PASSWORD')
+        'dbname': 'ddsrbnak1f1dl7',
+        'user': 'dxjycngdhidqjp',
+        'host': 'ec2-54-170-90-26.eu-west-1.compute.amazonaws.com',
+        'password': '472023274908b36f06995cc2535736c5421837dce0b701c80be7968aba116d7c'
     }
 
 
