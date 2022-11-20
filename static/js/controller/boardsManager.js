@@ -60,6 +60,7 @@ async function createDefaultCards(boardId) {
         const content = cardBuilder(card);
         domManager.addChild(`.cards-container[data-board-cards-container-id="${boardId}"]`, content);
         cardsManager.addCardsDefaultEventListeners(card.id);
+        dragDropManager.initItemsDropZone(card);
     }
 }
 
