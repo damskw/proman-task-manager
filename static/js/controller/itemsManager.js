@@ -11,7 +11,7 @@ export let itemsManager = {
             const content = itemBuilder(item);
             domManager.addChild(`.single-card-item-section[data-card-id-item-section="${cardId}"]`, content);
             addItemsDefaultEventListeners(item.id);
-            dragDropManager.initDraggable(item);
+            // dragDropManager.initItemDraggable(item);
         }
     }, loadPublicItems: async function (cardId) {
         const items = await dataHandler.getItemsByCardId(cardId);
@@ -35,6 +35,16 @@ function addItemsDefaultEventListeners(itemId) {
         `.item-name[data-item-name-id="${itemId}"]`,
         "click",
         revealEditItemNameForm
+    );
+    domManager.addEventListener(
+        `.card-item[data-item-id="${itemId}"`,
+        "mouseover",
+        () => dragDropManager.initItemDraggable(itemId)
+    );
+    domManager.addEventListener(
+        `.card-item[data-item-id="${itemId}"`,
+        "mouseout",
+        () => dragDropManager.removeItemDraggable(itemId)
     )
 
 }

@@ -10,7 +10,7 @@ import queries
 
 mimetypes.add_type('application/javascript', '.js')
 app = Flask(__name__)
-app.secret_key = os.environ.get('APP_KEY')
+app.secret_key = os.getenv('APP_KEY')
 load_dotenv()
 
 
@@ -177,7 +177,6 @@ def add_empty_item(card_id: int):
     """
     if request.method == "POST":
         data = request.get_json()
-        item_title = data["itemTitle"]
         item_order = data["itemOrder"]
         return queries.create_new_item(card_id, data["itemTitle"], item_order)
 

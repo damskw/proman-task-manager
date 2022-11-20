@@ -22,8 +22,7 @@ export let cardsManager = {
             domManager.addChild(`.cards-container[data-board-cards-container-id="${boardId}"]`, content);
             await itemsManager.loadManageableItems(card.id);
             addCardsDefaultEventListeners(card.id);
-            // dragDropManager.initDraggable(card);
-            dragDropManager.initDropZone(card);
+            dragDropManager.initItemsDropZone(card);
         }
     },
     addItem,
@@ -45,7 +44,12 @@ function addCardsDefaultEventListeners(cardId) {
         `#delete-card-button[data-delete-card-button-id="${cardId}"]`,
         "click",
         deleteCard
-    )
+    );
+    // domManager.addEventListener(
+    //     `.single-card[data-card-id="${cardId}"`,
+    //     "mouseover",
+    //     () => dragDropManager.initCardDraggable(cardId)
+    // )
 }
 
 async function addItem(clickEvent) {
@@ -56,7 +60,7 @@ async function addItem(clickEvent) {
         const content = itemBuilder(item);
         domManager.addChild(`.single-card-item-section[data-card-id-item-section="${cardId}"]`, content);
         itemsManager.addItemsDefaultEventListeners(item.id);
-        dragDropManager.initDraggable(item);
+        dragDropManager.initItemDraggable(item);
     })
 }
 

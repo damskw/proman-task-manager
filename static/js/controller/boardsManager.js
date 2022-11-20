@@ -3,6 +3,7 @@ import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
 import {cardsManager} from "./cardsManager.js";
 import {pageManager} from "./pageManager.js";
+import {dragDropManager} from "./dragDropManager.js";
 
 export let boardsManager = {
     loadBoards: async function () {
@@ -88,6 +89,7 @@ async function addCard(clickEvent) {
     const content = cardBuilder(card);
     domManager.addChild(`.cards-container[data-board-cards-container-id="${boardId}"]`, content);
     await cardsManager.addCardsDefaultEventListeners(card.id)
+    dragDropManager.initItemsDropZone(card);
 }
 
 function revealEditBoardTitleForm(clickEvent) {
